@@ -28,6 +28,8 @@ package main.java.com.mundosica.wifi.manager;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+import static javafx.application.Application.*;
+import javafx.application.HostServices;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
@@ -59,7 +61,8 @@ import main.java.com.mundosica.wifi.manager.Model.Profile;
  * @author @Fitorec <chanerec at gmail.com>
  */
 public class MainController implements Initializable {
-
+    public static HostServices hostServices ;
+ 
     @FXML
     private TableView tableProfiles;
     @FXML
@@ -76,11 +79,21 @@ public class MainController implements Initializable {
     private MenuButton buscarType;
     @FXML
     private TextField buscarField;
-
+    
     private static final ExtensionFilter filterXml = new ExtensionFilter("Archivo de Configuración", "*.xml");
 
     private Profile currentProfile() {
         return (Profile) tableProfiles.getSelectionModel().getSelectedItem();
+    }
+
+    /**
+     *
+     * @param e
+     */
+    @FXML
+    public void getSICA(ActionEvent e) {
+        System.out.println("Vamos a mundosica.com");
+        hostServices.showDocument("http://mundosica.com");
     }
 
     /**

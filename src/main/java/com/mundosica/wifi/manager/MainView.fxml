@@ -21,5 +21,6 @@
       <Button layoutX="590.0" layoutY="40.0" mnemonicParsing="true" onAction="#importar" text="_Importar" />
       <Button disable="true" layoutX="700.0" layoutY="40.0" mnemonicParsing="true" text="_Exportar" />
       <Button disable="true" layoutX="810.0" layoutY="40.0" mnemonicParsing="true" text="_Borrar" />
+      <Hyperlink id="mundosica" layoutX="763.0" layoutY="559.0" onAction="#getSICA" text="mundosica.com" />
     </children>
 </AnchorPane>

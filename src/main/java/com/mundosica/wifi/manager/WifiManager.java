@@ -48,6 +48,7 @@ public class WifiManager extends Application {
         WifiManager.stage.setTitle("Conexiones Inalambricas");
         WifiManager.stage.getIcons().add(new Image("file:icon.png"));
         //WifiManager.stage.initStyle(StageStyle.UNDECORATED);
+        MainController.hostServices = getHostServices();
         WifiManager.stage.show();
     }
 

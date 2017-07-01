@@ -11,6 +11,16 @@
     /* -fx-background-radius: 20; */
 }
 
+#mundosica {
+    -fx-text-fill: #FF9300;
+}
+
+#mundosica:hover {
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFB300;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 5,0,2,2 );
+}
+
 .context-menu {
    -fx-background-radius: 5;
    -fx-background-color: rgba(0, 0, 0, 0.9);
