@@ -11,6 +11,12 @@
     /* -fx-background-radius: 20; */
 }
 
+#powered {
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.2) , 5,0,2,2 );
+}
+
 #mundosica {
     -fx-text-fill: #FF9300;
 }

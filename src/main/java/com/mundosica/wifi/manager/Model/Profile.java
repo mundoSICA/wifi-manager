@@ -9,6 +9,8 @@ import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import main.java.com.mundosica.wifi.manager.NetshWlan;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 
 /**
  *
@@ -25,7 +27,7 @@ public final class Profile {
     private String ssid_hex = "";
     /// connectionMode
     private String connectionType = "";
-    private String connectionMode = "";
+    private BooleanProperty connectionMode = new SimpleBooleanProperty();
     /// MSM/security/authEncryption
     private String authentication = "";
     private String encryption = "";
@@ -43,7 +45,9 @@ public final class Profile {
         Map<String, String> data = ParseProfile.get(fileName);
         this.fileName = fileName;
         this.setName(data.get("/name/"));
-        this.setConnectionMode(data.get("/connectionMode/"));
+        //
+        boolean conMode = data.get("/connectionMode/").equals("auto");
+        this.setConnectionMode(conMode);
         String auth = data.get("/MSM/security/authEncryption/authentication/");
         String KeyMat = "";
         if (!auth.equals("open")) {
@@ -51,6 +55,9 @@ public final class Profile {
         }
         this.setAuthentication(auth);
         this.setKeyMaterial(KeyMat);
+        if (conMode) {
+            System.out.println("Red:" + this.getName()+ " Modo:" + conMode+"\n");
+        }
     }
 
     public static boolean export(Profile f, String fileAbsolutePath) {
@@ -60,9 +67,7 @@ public final class Profile {
             Files.copy(srcFile.toPath(), dest.toPath(), REPLACE_EXISTING);
             Config.setSavePath(dest.getParent());
             return true;
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+        } catch(Exception e) {}
         return false;
     }
 
@@ -99,13 +104,13 @@ public final class Profile {
         }
         return Profile.list();
     }
+
     /**
      *
      * @param search
-     * @param type
      * @return
      */
-    public static ObservableList search(String search, String type) {
+    public static ObservableList search(String search) {
         ObservableList<Profile> profilesList = FXCollections.observableArrayList();
         Profile.list.forEach((k, profile) -> {
             if (    profile.name.toLowerCase().contains(search.toLowerCase()) ||
@@ -178,15 +183,15 @@ public final class Profile {
     /**
      * @return the connectionMode
      */
-    public String getConnectionMode() {
+    public BooleanProperty getConnectionMode() {
         return connectionMode;
     }
 
     /**
-     * @param connectionMode the connectionMode to set
+     * @param cMode
      */
-    public void setConnectionMode(String connectionMode) {
-        this.connectionMode = connectionMode;
+    public void setConnectionMode(boolean cMode) {
+        this.connectionMode.set(cMode);
     }
 
     /**

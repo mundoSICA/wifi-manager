@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -9,7 +10,7 @@
 <AnchorPane id="AnchorPane" maxHeight="600.0" maxWidth="950.0" minHeight="600.0" minWidth="950.0" prefHeight="600.0" prefWidth="950.0" styleClass="background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.com.mundosica.wifi.manager.MainController">
     <children>
       <TextField fx:id="buscarField" layoutX="30.0" layoutY="40.0" onKeyReleased="#buscar" prefHeight="25.0" prefWidth="176.0" promptText="Buscar" />
-      <TableView fx:id="tableProfiles" layoutX="30.0" layoutY="80.0" onKeyPressed="#keyOnTable" prefHeight="475.0" prefWidth="870.0">
+      <TableView fx:id="tableProfiles" editable="true" layoutX="30.0" layoutY="80.0" onKeyPressed="#tableOnKeyPressed" onMouseClicked="#tableOnMouseClicked" prefHeight="475.0" prefWidth="870.0" tableMenuButtonVisible="true">
         <columns>
           <TableColumn fx:id="columnSttus" prefWidth="90.0" text="status" />
           <TableColumn fx:id="columnName" prefWidth="250.0" text="nombre" />
@@ -17,10 +18,14 @@
           <TableColumn fx:id="columnAuth" prefWidth="90.0" text="Seguridad" />
           <TableColumn fx:id="columnKey" prefWidth="200.0" text="Password" />
         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
       </TableView>
       <Button layoutX="590.0" layoutY="40.0" mnemonicParsing="true" onAction="#importar" text="_Importar" />
       <Button disable="true" layoutX="700.0" layoutY="40.0" mnemonicParsing="true" text="_Exportar" />
       <Button disable="true" layoutX="810.0" layoutY="40.0" mnemonicParsing="true" text="_Borrar" />
       <Hyperlink id="mundosica" layoutX="763.0" layoutY="559.0" onAction="#getSICA" text="mundosica.com" />
+      <Text fx:id="powered" layoutX="681.0" layoutY="577.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Powered By" wrappingWidth="89.185546875" />
     </children>
 </AnchorPane>
