@@ -29,7 +29,6 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.HostServices;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -51,7 +50,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.util.Callback;
 import main.java.com.mundosica.wifi.manager.Model.Config;
 import main.java.com.mundosica.wifi.manager.Model.Profile;
 
@@ -193,13 +191,10 @@ public class MainController implements Initializable {
             new PropertyValueFactory<>("name")
         );
         // ColumnMode: auto
-        columnMode.setCellFactory(CheckBoxTableCell.forTableColumn(new Callback<Integer, ObservableValue<Boolean>>() {
-            @Override
-            public ObservableValue<Boolean> call(Integer param) {
-                Profile p = (Profile) tableProfiles.getItems().get(param);
-                System.out.println("Profile "+p.getName()+" Cambio " +p.getConnectionMode());
-                return p.getConnectionMode();
-            }
+        columnMode.setCellFactory(CheckBoxTableCell.forTableColumn((Integer index) -> {
+            Profile p = (Profile) tableProfiles.getItems().get(index);
+            System.out.println("Profile: "+p.getName()+", Mode: " +p.getConnectionMode());
+            return p.getConnectionMode();
         }));
         columnMode.setEditable(true);
         // Tipo de autenticaion.
