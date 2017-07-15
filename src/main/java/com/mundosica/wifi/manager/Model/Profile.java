@@ -2,13 +2,11 @@ package main.java.com.mundosica.wifi.manager.Model;
 
 import java.io.File;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import main.java.com.mundosica.wifi.manager.NetshWlan;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
@@ -18,7 +16,8 @@ import javafx.beans.property.SimpleBooleanProperty;
  */
 public final class Profile {
     //
-    private static Map<String, Profile> list = new HashMap();
+    private static final Map<String, Profile> LIST_PROFILE = new HashMap();
+    public static boolean visiblePassword = false;
 
     private String fileName = null;
     private String name = "";
@@ -27,7 +26,7 @@ public final class Profile {
     private String ssid_hex = "";
     /// connectionMode
     private String connectionType = "";
-    private BooleanProperty connectionMode = new SimpleBooleanProperty();
+    private final BooleanProperty connectionMode = new SimpleBooleanProperty();
     /// MSM/security/authEncryption
     private String authentication = "";
     private String encryption = "";
@@ -36,7 +35,11 @@ public final class Profile {
     private String keyType = "";
     private String keyProtected = "";
     private String keyMaterial = "";
-
+    // network data
+    private Integer status = 0;
+    private String macAddress = "";
+    private Integer channel = 0;
+    private String protocol = "";
     /**
      *
      * @param fileName
@@ -46,8 +49,7 @@ public final class Profile {
         this.fileName = fileName;
         this.setName(data.get("/name/"));
         //
-        boolean conMode = data.get("/connectionMode/").equals("auto");
-        this.setConnectionMode(conMode);
+        this.connectionMode.set(data.get("/connectionMode/").equals("auto"));
         String auth = data.get("/MSM/security/authEncryption/authentication/");
         String KeyMat = "";
         if (!auth.equals("open")) {
@@ -55,9 +57,6 @@ public final class Profile {
         }
         this.setAuthentication(auth);
         this.setKeyMaterial(KeyMat);
-        if (conMode) {
-            System.out.println("Red:" + this.getName()+ " Modo:" + conMode+"\n");
-        }
     }
 
     public static boolean export(Profile f, String fileAbsolutePath) {
@@ -75,9 +74,18 @@ public final class Profile {
      *
      */
     public static void loadList() {
+        Network.update();
         NetshWlan.exportProfiles().forEach(fileXML -> {
             Profile prof = new Profile(fileXML);
-            Profile.list.put(prof.getName(), prof);
+            Network net = Network.byName(prof.getName());
+            if (net != null) {
+                BSSID b  = net.bestBSSID();
+                prof.status = b.signal;
+                prof.macAddress = b.mac;
+                prof.channel = b.chanel;
+                prof.protocol = b.type;
+            }
+            Profile.LIST_PROFILE.put(prof.getName(), prof);
          });
     }
 
@@ -87,7 +95,7 @@ public final class Profile {
      */
     public static ObservableList list() {
         ObservableList<Profile> profilesList = FXCollections.observableArrayList();
-        Profile.list.forEach((k, prof) -> {
+        Profile.LIST_PROFILE.forEach((k, prof) -> {
             profilesList.add(prof);
         });
         return profilesList;
@@ -100,7 +108,7 @@ public final class Profile {
      */
     public static ObservableList remove(Profile p) {
         if (p != null ) {
-            Profile.list.remove(p.getName());
+            Profile.LIST_PROFILE.remove(p.getName());
         }
         return Profile.list();
     }
@@ -112,7 +120,7 @@ public final class Profile {
      */
     public static ObservableList search(String search) {
         ObservableList<Profile> profilesList = FXCollections.observableArrayList();
-        Profile.list.forEach((k, profile) -> {
+        Profile.LIST_PROFILE.forEach((k, profile) -> {
             if (    profile.name.toLowerCase().contains(search.toLowerCase()) ||
                     profile.keyMaterial.toLowerCase().contains(search.toLowerCase()) ||
                     profile.authentication.toLowerCase().contains(search.toLowerCase())
@@ -188,10 +196,13 @@ public final class Profile {
     }
 
     /**
-     * @param cMode
+     * Se encarga de intercambiar el valor de auto conexión.
+     *
      */
-    public void setConnectionMode(boolean cMode) {
-        this.connectionMode.set(cMode);
+    public void tooggleConnectionMode() {
+        System.out.println("RED: " + this.name);
+        boolean mode = this.connectionMode.get();
+        System.out.println("Cambiando el connection mode "+ mode);
     }
 
     /**
@@ -268,7 +279,14 @@ public final class Profile {
      * @return the keyMaterial
      */
     public String getKeyMaterial() {
-        return keyMaterial;
+        if ( visiblePassword) {
+            return keyMaterial;
+        }
+        String hidden = "";
+        for (int i=0; i<keyMaterial.length(); i++) {
+            hidden += "●";
+        }
+        return hidden;
     }
 
     /**
@@ -290,5 +308,71 @@ public final class Profile {
      */
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+    /**
+     * toString Method
+     *
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "name: " + this.name + "\n" +
+                "connectionMode: " + this.connectionMode + "\n";
+    }
+
+    /**
+     * @return the status
+     */
+    public String getStatus() {
+        return status + " %";
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    /**
+     * @return the macAddress
+     */
+    public String getMacAddress() {
+        return macAddress;
+    }
+
+    /**
+     * @param macAddress the macAddress to set
+     */
+    public void setMacAddress(String macAddress) {
+        this.macAddress = macAddress;
+    }
+
+    /**
+     * @return the channel
+     */
+    public Integer getChannel() {
+        return channel;
+    }
+
+    /**
+     * @param channel the channel to set
+     */
+    public void setChannel(Integer channel) {
+        this.channel = channel;
+    }
+
+    /**
+     * @return the protocol
+     */
+    public String getProtocol() {
+        return protocol;
+    }
+
+    /**
+     * @param protocol the protocol to set
+     */
+    public void setProtocol(String protocol) {
+        this.protocol = protocol;
     }
 }

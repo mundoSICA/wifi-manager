@@ -26,25 +26,39 @@
 
 package main.java.com.mundosica.wifi.manager.Model;
 
-import java.util.prefs.Preferences;
+import java.util.List;
 
 /**
  *
  * @author @Fitorec <chanerec at gmail.com>
  */
-public class Config {
-    private static final Preferences PREFS = Preferences.userRoot().node("main.java.com.mundosica.wifi.manager");
-    public static String getSavePath() {
-        String path = PREFS.get("savePath", null);
-        System.out.println("Directorio leido:" + path);
-        if (path == null) {
-            return System.getProperty("user.home");
+public class BSSID {
+    public String mac;
+    public int signal;
+    public String type;
+    public int chanel;
+    public String vel_basic;
+    public String vel_other;
+
+    BSSID(List<String> dataBSSID) {
+        this.mac = Network.val(dataBSSID.get(0));
+        String sing = Network.val(dataBSSID.get(1));
+        this.signal = Integer.parseInt(sing.substring(0, sing.length()-1));
+        this.type = Network.val(dataBSSID.get(2));
+        if (dataBSSID.size()>3) {
+            this.chanel = Integer.parseInt(Network.val(dataBSSID.get(3)));
+            this.vel_basic = Network.val(dataBSSID.get(4));
+            this.vel_other = Network.val(dataBSSID.get(5));
         }
-        return path;
     }
 
-    public static void setSavePath(String path) {
-        System.out.println("Directorio a guardar: " + path);
-        PREFS.put("savePath", path);
+    @Override
+    public String toString() {
+        return "\n\tMAC: [" + this.mac + "]" +
+            "\n\tSignal: [" + this.signal + "%]" +
+            "\n\ttype: [" + this.type + "]" +
+            "\n\tchanel: [" + this.chanel + "]" +
+            "\n\tvel_basic: [" + this.vel_basic + "]" +
+            "\n\tvel_other: [" + this.vel_other + "]";
     }
 }

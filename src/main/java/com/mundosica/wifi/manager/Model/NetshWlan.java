@@ -24,7 +24,7 @@
  *
  */
 
-package main.java.com.mundosica.wifi.manager;
+package main.java.com.mundosica.wifi.manager.Model;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,7 +32,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
-import main.java.com.mundosica.wifi.manager.Model.Profile;
 
 /**
  *
@@ -53,9 +52,7 @@ public class NetshWlan {
         try {
             String path = new java.io.File(".").getCanonicalPath();
             return path + "\\data";
-        } catch(IOException ioError) {
-            ioError.printStackTrace();
-        }
+        } catch(IOException ioError) { }
         return null;
     }
 
@@ -70,9 +67,7 @@ public class NetshWlan {
             return  new BufferedReader(
                     new InputStreamReader(process.getInputStream())
             ).lines();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+        } catch(Exception e) { }
         return null;
     }
 
@@ -85,9 +80,7 @@ public class NetshWlan {
         try {
             Process process=Runtime.getRuntime().exec(PREFIX + cmd);
             return  true;
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+        } catch(Exception e) {}
         return false;
     }
 
@@ -99,19 +92,18 @@ public class NetshWlan {
         try {
             Stream<String> outCmd = NetshWlan.exec(cmd);
             outCmd.forEach(line -> System.out.println(line));
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+        } catch(Exception e) { }
     }
 
     /**
+     * Regresa una lista con los nombres de archivos .xml de los perfiles
      *
-     * @return
+     * @return lista de nombres de archivos que contienen perfiles
      */
     public static Stream<String> exportProfiles() {
         String cmd = "export profile key=clear folder=\"" + NetshWlan.dataPath()+"\"";
         System.out.println(cmd+"\n\n\n\n");
-        List<String> files = new ArrayList<String>();
+        List<String> files = new ArrayList<>();
         try {
             NetshWlan.exec(cmd).forEach( line -> {
                 if (line.indexOf(".xml") > 1) {
@@ -120,20 +112,20 @@ public class NetshWlan {
                 }
             });
             return files.stream();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+        } catch(Exception e) { }
         return null;
     }
 
     /**
      * networks
+     * @return El resultado del scaneo.
      */
-    public static void networks() {
+    protected static Stream<String> networks() {
         String cmd = "show network mode=bssid";
+        return NetshWlan.exec(cmd);
     }
 
-    static boolean delete(Profile p) {
+    public static boolean delete(Profile p) {
         String cmd = "delete profile name=\""+p.getName()+"\"";
         return NetshWlan.simpleExec(cmd);
     }

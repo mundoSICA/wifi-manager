@@ -18,7 +18,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.stream.Stream;
-import main.java.com.mundosica.wifi.manager.NetshWlan;
 
 
 /**
@@ -65,7 +64,6 @@ public class ParseProfile {
                         key += instance.get(k) + "/";
                     }
                     xmlData.put(key, val);
-                    System.out.println(key + ":" + val);
                 }
             }
         });
@@ -76,9 +74,7 @@ public class ParseProfile {
        String fName = NetshWlan.dataPath() + File.separator +  fileName;
        try{
             return (new BufferedReader(new FileReader(new File(fName)))).lines();
-       } catch (IOException e) {
-            e.printStackTrace();
-       }
+       } catch (IOException e) { }
        return null;
    }
 }

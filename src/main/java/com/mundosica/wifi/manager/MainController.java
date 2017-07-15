@@ -25,16 +25,22 @@
  */
 package main.java.com.mundosica.wifi.manager;
 
+import main.java.com.mundosica.wifi.manager.Model.NetshWlan;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.HostServices;
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -73,11 +79,22 @@ public class MainController implements Initializable {
     @FXML
     private TableColumn columnKey;
     @FXML
+    private TableColumn columnMac;
+    @FXML
+    private TableColumn columnChannel;
+    @FXML
+    private TableColumn columnProtocol;
+    @FXML
     private MenuButton buscarType;
     @FXML
     private TextField buscarField;
+    @FXML
+    public CheckBox pass_visible;
+
     // xml filter
     private static final ExtensionFilter XML_FILTER = new ExtensionFilter("Archivo de Configuración", "*.xml");
+    ObservableList<Profile> profilesList = FXCollections.observableArrayList();
+
     /// Menu
     ContextMenu cm = new ContextMenu();
 
@@ -85,22 +102,45 @@ public class MainController implements Initializable {
         return (Profile) tableProfiles.getSelectionModel().getSelectedItem();
     }
 
+    @SuppressWarnings("empty-statement")
+    public void showItems() {
+        String search = buscarField.getText();
+        this.tableProfiles.getItems().clear();
+        profilesList.clear();
+        if (search!=null && search.length() >= 2) {
+            this.profilesList = Profile.search(search);;
+        } else {
+            profilesList.addAll(Profile.list());
+        }
+        this.tableProfiles.setItems(profilesList);
+    }
+
     /**
      *
-     * @param e
+     * @param event
      */
     @FXML
-    public void getSICA(ActionEvent e) {
+    public void visiblePassword(ActionEvent event) {
+        Profile.visiblePassword = !Profile.visiblePassword;
+        this.showItems();
+    }
+
+    /**
+     *
+     * @param ae
+     */
+    @FXML
+    public void getSICA(ActionEvent ae) {
         System.out.println("Vamos a mundosica.com");
         hostServices.showDocument("http://mundosica.com");
     }
 
     /**
      *
-     * @param e
+     * @param ae
      */
     @FXML
-    public void importar(ActionEvent e) {
+    public void importar(ActionEvent ae) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Importar Configuración");
         fileChooser.getExtensionFilters().add(XML_FILTER);
@@ -128,13 +168,7 @@ public class MainController implements Initializable {
      */
     @FXML
     public void buscar(KeyEvent ke) {
-        String search = buscarField.getText();
-        if (search.length() < 2) {
-            return;
-        }
-        this.tableProfiles.getItems().clear();
-        this.tableProfiles.setItems(Profile.search(search));
-        System.out.println(search);
+        this.showItems();
     }
 
     public void borrar() {
@@ -144,7 +178,8 @@ public class MainController implements Initializable {
         if (alert.getResult() == ButtonType.YES) {
             NetshWlan.delete(p);
             this.tableProfiles.getItems().clear();
-            this.tableProfiles.setItems(Profile.remove(p));
+            profilesList.remove(p);
+            this.tableProfiles.setItems(profilesList);
         }
     }
 
@@ -156,8 +191,18 @@ public class MainController implements Initializable {
     @FXML
     public void tableOnKeyPressed(KeyEvent ke) {
         KeyCode code = ke.getCode();
-        if (code.toString().equals("DELETE")) {
-            this.borrar();
+        switch(code.toString()) {
+            case "DELETE":
+                this.borrar();
+                break;
+            case "CONTEXT_MENU":
+                // Cambiar esto
+                double x = WifiManager.stage.getX() + this.tableProfiles.getLayoutX();
+                double y = WifiManager.stage.getY() + this.tableProfiles.getLayoutY();
+                this.showTableRowMenu(x, y);
+                break;
+            default:
+                System.out.println("Código: " + code.toString());
         }
     }
 
@@ -168,13 +213,17 @@ public class MainController implements Initializable {
      */
     @FXML
     public void tableOnMouseClicked(MouseEvent me) {
+        if (me.getButton() == MouseButton.SECONDARY) {
+            this.showTableRowMenu(me.getScreenX() , me.getScreenY());
+        }
+    }
+
+    public void showTableRowMenu(double x, double y) {
         Profile p = this.currentProfile();
         if (p == null) {
             return;
         }
-        if (me.getButton() == MouseButton.SECONDARY) {
-            cm.show(tableProfiles , me.getScreenX() , me.getScreenY());
-        }
+        cm.show(tableProfiles , x, y);
     }
 
     /**
@@ -183,40 +232,50 @@ public class MainController implements Initializable {
      * @param url
      * @param rb
      */
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        columnSttus.setCellValueFactory(new PropertyValueFactory<>("status"));
         // columnSttus
-        columnName.setCellValueFactory(
-            new PropertyValueFactory<>("name")
-        );
+        columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         // ColumnMode: auto
         columnMode.setCellFactory(CheckBoxTableCell.forTableColumn((Integer index) -> {
             Profile p = (Profile) tableProfiles.getItems().get(index);
-            System.out.println("Profile: "+p.getName()+", Mode: " +p.getConnectionMode());
             return p.getConnectionMode();
         }));
         columnMode.setEditable(true);
         // Tipo de autenticaion.
-        columnAuth.setCellValueFactory(
-            new PropertyValueFactory<>("authentication")
-        );
+        columnAuth.setCellValueFactory(new PropertyValueFactory<>("authentication"));
         // Password
         columnKey.setCellFactory(TextFieldTableCell.forTableColumn());
-        columnKey.setCellValueFactory(
-            new PropertyValueFactory<>("keyMaterial")
-        );
-        Profile.loadList();
-        this.tableProfiles.getItems().clear();
-        this.tableProfiles.setItems(Profile.list());
+        columnKey.setCellValueFactory(new PropertyValueFactory<>("keyMaterial"));
+        //MAC address
+        columnMac.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnMac.setCellValueFactory(new PropertyValueFactory<>("macAddress"));
+        //
+        columnChannel.setCellValueFactory(new PropertyValueFactory<>("channel"));
+        columnProtocol.setCellValueFactory(new PropertyValueFactory<>("protocol"));
         // Menu
         MenuItem mi1 = new MenuItem("Exportar");
         mi1.setOnAction(event -> exportar());
         cm.getItems().add(mi1);
-        MenuItem mi2 = new MenuItem("Compartir");
+        MenuItem mi2 = new MenuItem("Editar");
         cm.getItems().add(mi2);
         MenuItem mi3 = new MenuItem("Eliminar");
         mi3.setOnAction(event -> borrar());
         cm.getItems().add(mi3);
+        //
+        profilesList = FXCollections.observableArrayList((Profile p) -> new Observable[] {p.getConnectionMode()});
+        profilesList.addListener((ListChangeListener.Change<? extends Profile> c) -> {
+            while (c.next()) {
+                if (c.wasUpdated()) {
+                    Profile p = profilesList.get(c.getFrom());
+                    p.tooggleConnectionMode();
+                    break;
+                }
+            }
+        });
+        //
+        Profile.loadList();
+        this.showItems();
     }
 }

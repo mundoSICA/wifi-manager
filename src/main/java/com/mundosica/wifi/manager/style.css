@@ -11,6 +11,11 @@
     /* -fx-background-radius: 20; */
 }
 
+#pass_visible {
+    -fx-font-weight: bold;
+    -fx-text-fill: #00d0ff;
+}
+
 #powered {
     -fx-font-weight: bold;
     -fx-text-fill: #FFFFFF;
