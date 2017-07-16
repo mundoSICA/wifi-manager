@@ -13,7 +13,7 @@
       <TableView fx:id="tableProfiles" editable="true" layoutX="30.0" layoutY="80.0" onKeyPressed="#tableOnKeyPressed" onMouseClicked="#tableOnMouseClicked" prefHeight="475.0" prefWidth="870.0" tableMenuButtonVisible="true">
         <columns>
           <TableColumn fx:id="columnSttus" prefWidth="80.0" sortType="DESCENDING" text="status" />
-          <TableColumn fx:id="columnName" prefWidth="190.0" text="nombre" />
+          <TableColumn fx:id="columnName" prefWidth="200.0" text="nombre" />
           <TableColumn fx:id="columnMode" prefWidth="70.0" text="Auto" />
           <TableColumn fx:id="columnKey" prefWidth="180.0" text="Password" />
           <TableColumn fx:id="columnAuth" prefWidth="90.0" text="Seguridad" />

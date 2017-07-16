@@ -45,6 +45,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
@@ -272,6 +273,27 @@ public class MainController implements Initializable {
                     p.tooggleConnectionMode();
                     break;
                 }
+            }
+        });
+        //
+        this.tableProfiles.setRowFactory(tv -> new TableRow<Profile>() {
+            @Override
+            public void updateItem(Profile profile, boolean empty) {
+                super.updateItem(profile, empty) ;
+                if (profile == null) {
+                    return;
+                }
+                int st = profile.getStatusInt();
+                if (st<10) {
+                    return;
+                }
+                //-91/100, 17/100, -39/100
+                int cls[] = {230-91*st/100,230+17*st/100,230-39*st/100};
+                String col = "";
+                for(int c: cls) {
+                    col += Integer.toHexString(c);
+                }
+                setStyle("-fx-background-color: #" + col + ";");
             }
         });
         //

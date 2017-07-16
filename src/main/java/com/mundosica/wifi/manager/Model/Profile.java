@@ -200,11 +200,14 @@ public final class Profile {
      *
      */
     public void tooggleConnectionMode() {
-        System.out.println("RED: " + this.name);
-        boolean mode = this.connectionMode.get();
-        System.out.println("Cambiando el connection mode "+ mode);
+        String mod = this.connectionMode.get()? "auto" : "manual";
+        String cmd = baseChangeValue() + " connectionMode="+mod;
+        NetshWlan.simpleExec(cmd);
     }
 
+    public String baseChangeValue() {
+        return "set profileparameter name=\"" + this.name + "\" ";
+    }
     /**
      * @return the authentication
      */
@@ -326,7 +329,12 @@ public final class Profile {
     public String getStatus() {
         return status + " %";
     }
-
+    /**
+     * @return the status
+     */
+    public Integer getStatusInt() {
+        return status;
+    }
     /**
      * @param status the status to set
      */
