@@ -32,7 +32,7 @@ import java.util.List;
  *
  * @author @Fitorec <chanerec at gmail.com>
  */
-public class BSSID {
+class BSSID {
     public String mac;
     public int signal;
     public String type;

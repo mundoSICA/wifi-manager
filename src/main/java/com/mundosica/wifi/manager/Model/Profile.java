@@ -101,6 +101,15 @@ public final class Profile {
         return profilesList;
     }
 
+    public static boolean delete(Profile p) {
+        String cmd = "delete profile name=\""+p.getName()+"\"";
+        if (NetshWlan.simpleExec(cmd)) {
+            Profile.LIST_PROFILE.remove(p.getName());
+            return true;
+        }
+        return false;
+    }
+
     /**
      *
      * @param p
@@ -292,6 +301,12 @@ public final class Profile {
         return hidden;
     }
 
+    public static boolean importFile(String fileName) {
+        String cmd = "add profile"
+                +" filename=\""+fileName+"\"";
+        return NetshWlan.simpleExec(cmd);
+    }
+    
     /**
      * @param keyMaterial the keyMaterial to set
      */
@@ -312,6 +327,7 @@ public final class Profile {
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
+
     /**
      * toString Method
      *

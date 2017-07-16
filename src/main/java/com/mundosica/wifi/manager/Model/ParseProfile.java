@@ -24,7 +24,7 @@ import java.util.stream.Stream;
  *
  * @author @Fitorec <chanerec at gmail.com>
  */
-public class ParseProfile {
+class ParseProfile {
 
    private ParseProfile(){}
 

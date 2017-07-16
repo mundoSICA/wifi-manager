@@ -124,9 +124,4 @@ public class NetshWlan {
         String cmd = "show network mode=bssid";
         return NetshWlan.exec(cmd);
     }
-
-    public static boolean delete(Profile p) {
-        String cmd = "delete profile name=\""+p.getName()+"\"";
-        return NetshWlan.simpleExec(cmd);
-    }
 }

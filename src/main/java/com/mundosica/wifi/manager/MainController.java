@@ -25,7 +25,6 @@
  */
 package main.java.com.mundosica.wifi.manager;
 
-import main.java.com.mundosica.wifi.manager.Model.NetshWlan;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -145,8 +144,13 @@ public class MainController implements Initializable {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Importar Configuración");
         fileChooser.getExtensionFilters().add(XML_FILTER);
-        //fileChooser.setInitialFileName(p.);
         File selectedFile = fileChooser.showOpenDialog(WifiManager.stage);
+        if (selectedFile == null) {
+            return;
+        }
+        Profile.importFile(selectedFile.getAbsolutePath());
+        Profile.loadList();
+        this.showItems();
     }
 
     public void exportar() {
@@ -158,9 +162,10 @@ public class MainController implements Initializable {
         fileChooser.setInitialDirectory(new File(Config.getSavePath()));
         fileChooser.setInitialFileName(p.getFileName());
         File selectedFile = fileChooser.showSaveDialog(WifiManager.stage);
-        if (selectedFile != null) {
-            Profile.export(p, selectedFile.getAbsolutePath());
+        if (selectedFile == null) {
+            return;
         }
+        Profile.export(p, selectedFile.getAbsolutePath());
     }
 
     /**
@@ -177,10 +182,8 @@ public class MainController implements Initializable {
         Alert alert = new Alert(AlertType.WARNING, "¿Estas seguro de borrar?", ButtonType.YES, ButtonType.CANCEL);
         alert.showAndWait();
         if (alert.getResult() == ButtonType.YES) {
-            NetshWlan.delete(p);
-            this.tableProfiles.getItems().clear();
-            profilesList.remove(p);
-            this.tableProfiles.setItems(profilesList);
+            Profile.delete(p);
+            this.showItems();
         }
     }
 

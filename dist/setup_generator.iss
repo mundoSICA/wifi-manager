@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Wifi-Manager"
-#define MyAppVersion "1.0 Beta"
+#define MyAppVersion "1.17.07.16"
 #define MyAppPublisher "Soluciones Integrales en Computación Aplicada"
 #define MyAppURL "http://www.mundosica.com/"
 #define MyAppExeName "wifi-manager.exe"
@@ -23,7 +23,7 @@ DefaultDirName={pf}\{#MyAppName}
 DisableProgramGroupPage=yes
 LicenseFile=..\LICENSE
 OutputDir=.
-OutputBaseFilename=setup_wifi-manager
+OutputBaseFilename=wifi-manager_ver{#MyAppVersion}
 SetupIconFile=..\icon.ico
 Compression=lzma
 SolidCompression=yes

@@ -23,4 +23,18 @@
     <jdkPreference>preferJre</jdkPreference>
     <runtimeBits>64/32</runtimeBits>
   </jre>
+  <versionInfo>
+    <fileVersion>1.17.07.16</fileVersion>
+    <txtFileVersion>Beta</txtFileVersion>
+    <fileDescription>Wifi Manager</fileDescription>
+    <copyright>MIT LICENSE</copyright>
+    <productVersion>1.17.07.16</productVersion>
+    <txtProductVersion>Beta</txtProductVersion>
+    <productName>Wifi Maganer</productName>
+    <companyName>mundosica.com</companyName>
+    <internalName>wifi-manager</internalName>
+    <originalFilename>wifi-manager.exe</originalFilename>
+    <trademarks></trademarks>
+    <language>SPANISH_MEXICO</language>
+  </versionInfo>
 </launch4jConfig>
