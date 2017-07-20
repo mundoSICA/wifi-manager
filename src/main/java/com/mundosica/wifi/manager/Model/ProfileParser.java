@@ -24,9 +24,9 @@ import java.util.stream.Stream;
  *
  * @author @Fitorec <chanerec at gmail.com>
  */
-class ParseProfile {
+class ProfileParser {
 
-   private ParseProfile(){}
+   private ProfileParser(){}
 
     /**
      *
@@ -37,7 +37,7 @@ class ParseProfile {
        if (fileName == null || fileName.length()< 4 ) {
             throw new NullPointerException("input cannot be null");
         }
-        Stream<String> fContent = ParseProfile.readFile(fileName);
+        Stream<String> fContent = ProfileParser.readFile(fileName);
         ArrayList<String> instance = new ArrayList<>();
         Map<String, String> xmlData = new HashMap();
         fContent.forEach(line -> {

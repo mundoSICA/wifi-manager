@@ -121,7 +121,7 @@ public class MainController implements Initializable {
      */
     @FXML
     public void visiblePassword(ActionEvent event) {
-        Profile.visiblePassword = !Profile.visiblePassword;
+        Profile.toggleVisiblePassword();
         this.showItems();
     }
 
@@ -144,7 +144,7 @@ public class MainController implements Initializable {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Importar Configuración");
         fileChooser.getExtensionFilters().add(XML_FILTER);
-        File selectedFile = fileChooser.showOpenDialog(WifiManager.stage);
+        File selectedFile = fileChooser.showOpenDialog(Dispatcher.stage);
         if (selectedFile == null) {
             return;
         }
@@ -161,7 +161,7 @@ public class MainController implements Initializable {
         fileChooser.getExtensionFilters().add(XML_FILTER);
         fileChooser.setInitialDirectory(new File(Config.getSavePath()));
         fileChooser.setInitialFileName(p.getFileName());
-        File selectedFile = fileChooser.showSaveDialog(WifiManager.stage);
+        File selectedFile = fileChooser.showSaveDialog(Dispatcher.stage);
         if (selectedFile == null) {
             return;
         }
@@ -201,8 +201,8 @@ public class MainController implements Initializable {
                 break;
             case "CONTEXT_MENU":
                 // Cambiar esto
-                double x = WifiManager.stage.getX() + this.tableProfiles.getLayoutX();
-                double y = WifiManager.stage.getY() + this.tableProfiles.getLayoutY();
+                double x = Dispatcher.stage.getX() + this.tableProfiles.getLayoutX();
+                double y = Dispatcher.stage.getY() + this.tableProfiles.getLayoutY();
                 this.showTableRowMenu(x, y);
                 break;
             default:

@@ -33,14 +33,8 @@ import java.util.List;
  *
  * @author @Fitorec <chanerec at gmail.com>
  */
-public class Network {
+public class Network extends NetworkAbstract{
 
-    public int id;
-    public String name;
-    public String type;
-    public String auth;
-    public String encryption;
-    public List<BSSID> bssids = new ArrayList<>();
     public static List<Network> nets = new ArrayList<>();
 
     public static int indexOf(String name) {
@@ -99,23 +93,27 @@ public class Network {
             String line = dataNet.get(i).trim();
             if (line.indexOf("BSSID ") == 0) {
                 if (dataBSSID.size() > 1) {
-                    bssids.add(new BSSID(dataBSSID));
+                    BSSIDS.add(new BSSID(dataBSSID));
                 }
                 dataBSSID.clear();
             }
             dataBSSID.add(line);
         }
         if (dataBSSID.size()>1) {
-            bssids.add(new BSSID(dataBSSID));
+            BSSIDS.add(new BSSID(dataBSSID));
         }
     }
 
     protected static String val(String line) {
-        if (line.indexOf(":")<1) {
+        if (line == null) {
             return null;
         }
+        int index = line.indexOf(":");
+        if (index<1 || index+2>line.length()) {
+            return "";
+        }
         line = line.trim();
-        return line.substring(line.indexOf(":")+2);
+        return line.substring(index+2);
     }
 
     /**
@@ -130,9 +128,9 @@ public class Network {
             "type: ["+this.type+"]\n" +
             "auth: ["+this.auth+"]\n" +
             "encryption: ["+this.encryption+"\n";
-        for(int i = 0; i<this.bssids.size(); i++) {
+        for(int i = 0; i<this.BSSIDS.size(); i++) {
             out += "\t=== BSSID : " + (i+1) + "======";
-            out += this.bssids.get(i);
+            out += this.BSSIDS.get(i);
         }
         return out;
     }
@@ -166,7 +164,7 @@ public class Network {
      */
     public BSSID bestBSSID() {
         BSSID bestBssid = null;
-        for (Object bssid1 : this.bssids.toArray()) {
+        for (Object bssid1 : this.BSSIDS.toArray()) {
             BSSID bssid = (BSSID) bssid1;
             if (bestBssid == null || bssid.signal > bestBssid.signal) {
                 bestBssid = bssid;

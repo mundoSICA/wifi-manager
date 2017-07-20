@@ -25,38 +25,63 @@
  */
 package main.java.com.mundosica.wifi.manager;
 
+import java.util.prefs.Preferences;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import main.java.com.mundosica.wifi.manager.Model.NetshWlan;
 
 /**
  *
  * @author @Fitorec <chanerec at gmail.com>
  */
-public class WifiManager extends Application {
+public class Dispatcher extends Application {
     static Stage stage = null;
 
     @Override
     public void start(Stage st) throws Exception {
-        WifiManager.stage = st;
+        Dispatcher.stage = st;
+        if (!isAdmin()) {
+            Alert alert = new Alert(AlertType.ERROR, "Es necesario ejecutar la aplicación como administrador");
+            alert.showAndWait();
+            Dispatcher.stage.close();
+            return;
+        }
         Parent root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
         Scene scene = new Scene(root);
-        WifiManager.stage.setScene(scene);
-        WifiManager.stage.setTitle("Conexiones Inalambricas");
-        WifiManager.stage.getIcons().add(new Image("file:icon.png"));
+        Dispatcher.stage.setScene(scene);
+        Dispatcher.stage.setTitle("Conexiones Inalambricas");
+        Dispatcher.stage.getIcons().add(new Image("file:icon.png"));
         //WifiManager.stage.initStyle(StageStyle.UNDECORATED);
         MainController.hostServices = getHostServices();
-        WifiManager.stage.show();
+        Dispatcher.stage.show();
+    }
+
+    public static boolean isAdmin() {
+        String path = NetshWlan.dataPath();
+        if (path.toLowerCase().indexOf("projects") > 0) {
+            return true;
+        }
+        Preferences prefs = Preferences.systemRoot();
+        try {
+            prefs.put("foo", "bar");
+            prefs.remove("foo");
+            prefs.flush();
+            return true;
+        } catch(Exception e) {
+            return false;
+        }
     }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        //System.out.println(Netsh.dataPath());
         launch(args);
     }
 

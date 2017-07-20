@@ -63,7 +63,7 @@ public class NetshWlan {
      */
     public static Stream<String> exec(String cmd) {
         try {
-            Process process=Runtime.getRuntime().exec(PREFIX + cmd);
+            Process process = Runtime.getRuntime().exec(PREFIX + cmd);
             return  new BufferedReader(
                     new InputStreamReader(process.getInputStream())
             ).lines();
@@ -78,7 +78,7 @@ public class NetshWlan {
      */
     public static boolean simpleExec(String cmd) {
         try {
-            Process process=Runtime.getRuntime().exec(PREFIX + cmd);
+            Process process = Runtime.getRuntime().exec(PREFIX + cmd);
             return  true;
         } catch(Exception e) {}
         return false;

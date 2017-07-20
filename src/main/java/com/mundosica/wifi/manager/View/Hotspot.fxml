@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<SplitPane dividerPositions="0.5" layoutX="4.0" layoutY="4.0" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+    <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <TextField fx:id="bssid" layoutX="67.0" layoutY="55.0" promptText="modem" />
+                  <Text layoutX="67.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SSID (nombre de red)" />
+                  <PasswordField layoutX="67.0" layoutY="115.0" promptText="password" />
+                  <Text layoutX="67.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
+                  <CheckBox layoutX="240.0" layoutY="119.0" mnemonicParsing="false" text="Visible" />
+                  <Button layoutX="240.0" layoutY="50.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="100.0" text="Start" />
+                  <Button layoutX="382.0" layoutY="43.0" mnemonicParsing="false" text="Connexiones de red" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <TableView layoutX="44.0" layoutY="14.0" prefHeight="155.0" prefWidth="456.0">
+                    <columns>
+                      <TableColumn prefWidth="120.0" text="IP" />
+                      <TableColumn prefWidth="121.0" text="hostname" />
+                        <TableColumn prefWidth="160.0" text="Mac Address" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+        </items>
+</SplitPane>
