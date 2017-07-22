@@ -23,7 +23,7 @@
  * OTRO TIPO DE ACCIONES EN EL SOFTWARE.
  *
  */
-package main.java.com.mundosica.wifi.manager;
+package main.java.com.mundosica.wifi.manager.View;
 
 import java.io.File;
 import java.net.URL;
@@ -56,6 +56,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import main.java.com.mundosica.wifi.manager.Dispatcher;
 import main.java.com.mundosica.wifi.manager.Model.Config;
 import main.java.com.mundosica.wifi.manager.Model.Profile;
 
@@ -63,7 +64,7 @@ import main.java.com.mundosica.wifi.manager.Model.Profile;
  *
  * @author @Fitorec <chanerec at gmail.com>
  */
-public class MainController implements Initializable {
+public class ProfileTabController implements Initializable {
     public static HostServices hostServices ;
 
     @FXML

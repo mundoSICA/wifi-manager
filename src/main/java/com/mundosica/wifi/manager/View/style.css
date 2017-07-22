@@ -140,3 +140,7 @@
         rgba(0, 0, 0, 0.4),
         rgb(255, 255, 255);
 }
+
+.stop {
+    -fx-background-color: red;
+}

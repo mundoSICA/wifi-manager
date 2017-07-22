@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="500.0" maxWidth="900.0" minHeight="500.0" minWidth="900.0" prefHeight="500.0" prefWidth="900.0" styleClass="background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.com.mundosica.wifi.manager.View.ProfileTabController">
+    <children>
+      <TextField fx:id="buscarField" layoutX="30.0" layoutY="26.0" onKeyReleased="#buscar" prefHeight="31.0" prefWidth="295.0" promptText="Buscar" />
+      <TableView fx:id="tableProfiles" editable="true" layoutX="30.0" layoutY="80.0" onKeyPressed="#tableOnKeyPressed" onMouseClicked="#tableOnMouseClicked" prefHeight="385.0" prefWidth="850.0" tableMenuButtonVisible="true">
+        <columns>
+          <TableColumn fx:id="columnSttus" prefWidth="80.0" sortType="DESCENDING" text="status" />
+          <TableColumn fx:id="columnName" prefWidth="180.0" text="nombre" />
+          <TableColumn fx:id="columnMode" prefWidth="70.0" text="Auto" />
+          <TableColumn fx:id="columnKey" prefWidth="180.0" text="Password" />
+          <TableColumn fx:id="columnAuth" prefWidth="90.0" text="Seguridad" />
+          <TableColumn fx:id="columnMac" prefWidth="110.0" sortType="DESCENDING" text="MAC Address" />
+          <TableColumn fx:id="columnChannel" prefWidth="50.0" text="Canal" />
+          <TableColumn fx:id="columnProtocol" prefWidth="90.0" text="Protocolo" />
+        </columns>
+      </TableView>
+      <Button layoutX="700.0" layoutY="26.0" mnemonicParsing="true" onAction="#importar" prefHeight="31.0" prefWidth="127.0" text="_Importar" />
+      <Hyperlink id="mundosica" layoutX="749.0" layoutY="467.0" onAction="#getSICA" text="mundosica.com" />
+      <Text fx:id="powered" layoutX="674.0" layoutY="485.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Powered By" wrappingWidth="89.185546875" />
+      <CheckBox fx:id="pass_visible" layoutX="362.0" layoutY="33.0" mnemonicParsing="false" onAction="#visiblePassword" text="Visible" />
+    </children>
+</AnchorPane>

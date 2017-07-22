@@ -25,6 +25,7 @@
  */
 package main.java.com.mundosica.wifi.manager;
 
+import main.java.com.mundosica.wifi.manager.View.ProfileTabController;
 import java.util.prefs.Preferences;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -41,7 +42,7 @@ import main.java.com.mundosica.wifi.manager.Model.NetshWlan;
  * @author @Fitorec <chanerec at gmail.com>
  */
 public class Dispatcher extends Application {
-    static Stage stage = null;
+    static public Stage stage = null;
 
     @Override
     public void start(Stage st) throws Exception {
@@ -52,13 +53,13 @@ public class Dispatcher extends Application {
             Dispatcher.stage.close();
             return;
         }
-        Parent root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("View/HotspotTabView.fxml"));
         Scene scene = new Scene(root);
         Dispatcher.stage.setScene(scene);
         Dispatcher.stage.setTitle("Conexiones Inalambricas");
         Dispatcher.stage.getIcons().add(new Image("file:icon.png"));
         //WifiManager.stage.initStyle(StageStyle.UNDECORATED);
-        MainController.hostServices = getHostServices();
+        ProfileTabController.hostServices = getHostServices();
         Dispatcher.stage.show();
     }
 
