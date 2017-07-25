@@ -21,7 +21,7 @@
                   <CheckBox fx:id="pass_toggle" layoutX="299.0" layoutY="122.0" mnemonicParsing="false" onAction="#togglevisiblePassword" text="Visible" textFill="WHITE" />
                   <!-- Start/Stop -->
                   <Button fx:id="btn_start_stop" layoutX="64.0" layoutY="181.0" mnemonicParsing="false" onAction="#toggleRun" prefHeight="40.0" prefWidth="233.0" text="Iniciar" />
-                  <Button layoutX="693.0" layoutY="159.0" mnemonicParsing="false" text="Connexiones" />
+                  <Button layoutX="693.0" layoutY="159.0" mnemonicParsing="false" onAction="#openSystemConnections" text="Connexiones" />
             <TextField fx:id="num_max_clients" layoutX="316.0" layoutY="58.0" prefHeight="31.0" prefWidth="106.0" />
             <Text fill="WHITE" layoutX="316.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Núm. máx de clientes" />
                </children>

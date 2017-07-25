@@ -36,6 +36,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import main.java.com.mundosica.wifi.manager.Model.HostedNetwork;
+import main.java.com.mundosica.wifi.manager.Model.NetshWlan;
 
 /**
  * 
@@ -85,6 +86,14 @@ public class HotspotTabController implements Initializable {
     @FXML
     public void toggleRun(ActionEvent event) {
         this.updateStatus();
+    }
+    /**
+     *
+     * @param event
+     */
+    @FXML
+    public void openSystemConnections(ActionEvent event) {
+        NetshWlan.basicExec("control ncpa.cpl");
     }
 
     public void updateStatus() {
