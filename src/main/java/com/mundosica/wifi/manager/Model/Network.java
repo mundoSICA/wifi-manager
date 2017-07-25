@@ -84,12 +84,12 @@ public class Network extends NetworkAbstract{
     [4]     BSSID 0: ......
      */
     private Network(List<String> dataNet) {
-        this.name = Network.val(dataNet.get(0));
-        this.type = Network.val(dataNet.get(1));
-        this.auth = Network.val(dataNet.get(2));
-        this.encryption = Network.val(dataNet.get(3));
+        this.name = NetshWlan.val(dataNet.get(0));
+        this.type = NetshWlan.val(dataNet.get(1));
+        this.auth = NetshWlan.val(dataNet.get(2));
+        this.encryption = NetshWlan.val(dataNet.get(3));
         List<String> dataBSSID = new ArrayList<>();
-        for (int i = 4; i<dataNet.size(); i++) {
+        for (int i = 4; i < dataNet.size(); i++) {
             String line = dataNet.get(i).trim();
             if (line.indexOf("BSSID ") == 0) {
                 if (dataBSSID.size() > 1) {
@@ -102,18 +102,6 @@ public class Network extends NetworkAbstract{
         if (dataBSSID.size()>1) {
             BSSIDS.add(new BSSID(dataBSSID));
         }
-    }
-
-    protected static String val(String line) {
-        if (line == null) {
-            return null;
-        }
-        int index = line.indexOf(":");
-        if (index<1 || index+2>line.length()) {
-            return "";
-        }
-        line = line.trim();
-        return line.substring(index+2);
     }
 
     /**

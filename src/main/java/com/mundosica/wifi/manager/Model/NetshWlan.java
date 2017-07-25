@@ -62,26 +62,29 @@ public class NetshWlan {
      * @return
      */
     public static Stream<String> exec(String cmd) {
-        try {
-            Process process = Runtime.getRuntime().exec(PREFIX + cmd);
-            return  new BufferedReader(
-                    new InputStreamReader(process.getInputStream())
-            ).lines();
-        } catch(Exception e) { }
-        return null;
+        return NetshWlan.basicExec(PREFIX + cmd);
     }
-
     /**
      *
      * @param cmd
      * @return
      */
     public static boolean simpleExec(String cmd) {
+        return NetshWlan.basicExec(PREFIX + cmd) != null;
+    }
+    /**
+     *
+     * @param cmd
+     * @return
+     */
+    public static Stream<String> basicExec(String cmd) {
         try {
-            Process process = Runtime.getRuntime().exec(PREFIX + cmd);
-            return  true;
-        } catch(Exception e) {}
-        return false;
+            Process process = Runtime.getRuntime().exec(cmd);
+            return  new BufferedReader(
+                    new InputStreamReader(process.getInputStream())
+            ).lines();
+        } catch(Exception e) { }
+        return null;
     }
 
     /**
@@ -123,5 +126,20 @@ public class NetshWlan {
     protected static Stream<String> networks() {
         String cmd = "show network mode=bssid";
         return NetshWlan.exec(cmd);
+    }
+    /**
+     * 
+     * @param line
+     * @return 
+     */
+    public static String val(String line) {
+        if (line == null) {
+            return null;
+        }
+        int index = line.indexOf(":");
+        if (index<1 || index+2 > line.length()) {
+            return "";
+        }
+        return line.substring(index+1);
     }
 }

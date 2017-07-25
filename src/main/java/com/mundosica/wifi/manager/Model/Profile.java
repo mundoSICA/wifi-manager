@@ -14,7 +14,7 @@ import javafx.collections.ObservableList;
  */
 public final class Profile extends ProfileAbstract {
     //
-    private static final Map<String, Profile> LIST_PROFILE = new HashMap();
+    private static final Map<String, Profile> LIST_PROFILES = new HashMap();
     private static boolean visiblePassword = false;
 
     public static void toggleVisiblePassword() {
@@ -65,7 +65,7 @@ public final class Profile extends ProfileAbstract {
                 prof.channel = b.chanel;
                 prof.protocol = b.type;
             }
-            Profile.LIST_PROFILE.put(prof.getName(), prof);
+            Profile.LIST_PROFILES.put(prof.getName(), prof);
          });
     }
 
@@ -75,7 +75,7 @@ public final class Profile extends ProfileAbstract {
      */
     public static ObservableList list() {
         ObservableList<Profile> profilesList = FXCollections.observableArrayList();
-        Profile.LIST_PROFILE.forEach((k, prof) -> {
+        Profile.LIST_PROFILES.forEach((k, prof) -> {
             profilesList.add(prof);
         });
         return profilesList;
@@ -84,7 +84,7 @@ public final class Profile extends ProfileAbstract {
     public static boolean delete(Profile p) {
         String cmd = "delete profile name=\""+p.getName()+"\"";
         if (NetshWlan.simpleExec(cmd)) {
-            Profile.LIST_PROFILE.remove(p.getName());
+            Profile.LIST_PROFILES.remove(p.getName());
             return true;
         }
         return false;
@@ -97,7 +97,7 @@ public final class Profile extends ProfileAbstract {
      */
     public static ObservableList remove(Profile p) {
         if (p != null ) {
-            Profile.LIST_PROFILE.remove(p.getName());
+            Profile.LIST_PROFILES.remove(p.getName());
         }
         return Profile.list();
     }
@@ -109,7 +109,7 @@ public final class Profile extends ProfileAbstract {
      */
     public static ObservableList search(String search) {
         ObservableList<Profile> profilesList = FXCollections.observableArrayList();
-        Profile.LIST_PROFILE.forEach((k, profile) -> {
+        Profile.LIST_PROFILES.forEach((k, profile) -> {
             if (    profile.name.toLowerCase().contains(search.toLowerCase()) ||
                     profile.keyMaterial.toLowerCase().contains(search.toLowerCase()) ||
                     profile.authentication.toLowerCase().contains(search.toLowerCase())

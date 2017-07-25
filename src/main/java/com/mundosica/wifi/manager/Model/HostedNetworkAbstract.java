@@ -26,39 +26,72 @@
 
 package main.java.com.mundosica.wifi.manager.Model;
 
-import java.util.List;
-
 /**
- *
+ * 
  * @author @Fitorec <chanerec at gmail.com>
  */
-class BSSID {
-    public String mac;
-    public int signal;
-    public String type;
-    public int chanel;
-    public String vel_basic;
-    public String vel_other;
+public abstract class HostedNetworkAbstract {
+    // private String mode;
+    protected String ssid;
+    protected int num_max_clients;
+    // private String authentication;
+    // private String cipher;
+    protected String status;
+    private String password;
 
-    BSSID(List<String> dataBSSID) {
-        this.mac = NetshWlan.val(dataBSSID.get(0));
-        String sing = NetshWlan.val(dataBSSID.get(1));
-        this.signal = Integer.parseInt(sing.substring(0, sing.length()-1));
-        this.type = NetshWlan.val(dataBSSID.get(2));
-        if (dataBSSID.size()>3) {
-            this.chanel = Integer.parseInt(NetshWlan.val(dataBSSID.get(3)));
-            this.vel_basic = NetshWlan.val(dataBSSID.get(4));
-            this.vel_other = NetshWlan.val(dataBSSID.get(5));
-        }
+    /**
+     * @return the ssid
+     */
+    public String getSsid() {
+        return ssid;
     }
 
-    @Override
-    public String toString() {
-        return "\n\tMAC: [" + this.mac + "]" +
-            "\n\tSignal: [" + this.signal + "%]" +
-            "\n\ttype: [" + this.type + "]" +
-            "\n\tchanel: [" + this.chanel + "]" +
-            "\n\tvel_basic: [" + this.vel_basic + "]" +
-            "\n\tvel_other: [" + this.vel_other + "]";
+    /**
+     * @param ssid the ssid to set
+     */
+    public void setSsid(String ssid) {
+        this.ssid = ssid;
+    }
+
+    /**
+     * @return the num_max_clients
+     */
+    public int getNum_max_clients() {
+        return num_max_clients;
+    }
+
+    /**
+     * @param num_max_clients the num_max_clients to set
+     */
+    public void setNum_max_clients(int num_max_clients) {
+        this.num_max_clients = num_max_clients;
+    }
+
+    /**
+     * @return the status
+     */
+    public String getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

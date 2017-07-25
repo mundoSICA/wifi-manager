@@ -51,8 +51,11 @@ public class HotspotTabController implements Initializable {
     @FXML
     private CheckBox pass_toggle;
     @FXML
+    private TextField num_max_clients;
+    @FXML
     private Button btn_start_stop;
-    private String status = "";
+    private String currentStatus = "";
+    private HostedNetwork hotspot;
     /**
      * Controls the visibility of the Password field
      * @param event
@@ -81,14 +84,31 @@ public class HotspotTabController implements Initializable {
      */
     @FXML
     public void toggleRun(ActionEvent event) {
-        status = HostedNetwork.toggleRun(ssid.getText(), passwordValue());
-        btn_start_stop.getStyleClass().clear();
-        btn_start_stop.getStyleClass().add("stop");
+        this.updateStatus();
     }
 
+    public void updateStatus() {
+        this.btn_start_stop.getStyleClass().remove("stopped");
+        this.btn_start_stop.getStyleClass().remove("started");
+        if (currentStatus.equals("started")) {
+            this.btn_start_stop.setText("Detener");
+        } else {
+            this.btn_start_stop.setText("Iniciar");
+        }
+        this.btn_start_stop.getStyleClass().add(currentStatus);
+    }
+ 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.togglevisiblePassword(null);
+        //Set values
+        hotspot = new HostedNetwork();
+        this.ssid.setText(hotspot.getSsid());
+        this.num_max_clients.setText(hotspot.getNum_max_clients() + "");
+        this.currentStatus = hotspot.getStatus();
+        this.updateStatus();
+        this.pass_hidden.setText(hotspot.getPassword());
+        this.pass_text.setText(hotspot.getPassword());
     }
 
 }
