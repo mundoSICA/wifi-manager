@@ -31,67 +31,64 @@ package main.java.com.mundosica.wifi.manager.Model;
  * @author @Fitorec <chanerec at gmail.com>
  */
 public abstract class HostedNetworkAbstract {
-    // private String mode;
-    protected String ssid;
-    protected int num_max_clients;
-    // private String authentication;
-    // private String cipher;
-    protected String status;
-    private String password;
+    protected static String ssid;
+    protected static int num_max_clients;
+    protected static String status;
+    protected static String password;
 
     /**
      * @return the ssid
      */
-    public String getSsid() {
+    public static String getSsid() {
         return ssid;
     }
 
     /**
      * @param ssid the ssid to set
      */
-    public void setSsid(String ssid) {
-        this.ssid = ssid;
+    public static void setSsid(String ssid) {
+        HostedNetworkAbstract.ssid = ssid;
     }
 
     /**
      * @return the num_max_clients
      */
-    public int getNum_max_clients() {
+    public static int getNum_max_clients() {
         return num_max_clients;
     }
 
     /**
      * @param num_max_clients the num_max_clients to set
      */
-    public void setNum_max_clients(int num_max_clients) {
-        this.num_max_clients = num_max_clients;
+    public static void setNum_max_clients(int num_max_clients) {
+        HostedNetworkAbstract.num_max_clients = num_max_clients;
     }
 
     /**
      * @return the status
      */
-    public String getStatus() {
+    public static String getStatus() {
         return status;
     }
 
     /**
      * @param status the status to set
      */
-    public void setStatus(String status) {
-        this.status = status;
+    public static void setStatus(String status) {
+        HostedNetworkAbstract.status = status;
     }
 
     /**
      * @return the password
      */
-    public String getPassword() {
+    public static String getPassword() {
         return password;
     }
 
     /**
      * @param password the password to set
      */
-    public void setPassword(String password) {
-        this.password = password;
+    public static void setPassword(String password) {
+        HostedNetworkAbstract.password = password;
     }
 }

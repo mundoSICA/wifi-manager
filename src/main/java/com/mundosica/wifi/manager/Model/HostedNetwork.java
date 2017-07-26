@@ -51,11 +51,9 @@ Number of clients      : 0
 ------------------------  Spanish -------------------------
  */
 public final class HostedNetwork extends HostedNetworkAbstract {
-    public HostedNetwork() {
-        this.loadData();
-    }
+    private HostedNetwork() {}
 
-    public void loadData() {
+    public static void loadData() {
         ArrayList net = new ArrayList<>();
         Stream<String> data = NetshWlan.exec("show hostednetwork");
         data.forEach(l -> {
@@ -67,11 +65,11 @@ public final class HostedNetwork extends HostedNetworkAbstract {
         if (net.size() < 6) {
             return;
         }
-        this.ssid = NetshWlan.val(net.get(1).toString()).trim();
-        this.ssid = this.ssid.replaceAll("\"", "");
+        HostedNetwork.ssid = NetshWlan.val(net.get(1).toString()).trim();
+        HostedNetwork.ssid = HostedNetwork.ssid.replaceAll("\"", "");
         String nClients = NetshWlan.val(net.get(2).toString()).trim();
-        this.num_max_clients = Integer.parseInt(nClients);
-        this.setStatus(NetshWlan.val(net.get(5).toString()));
+        HostedNetwork.num_max_clients = Integer.parseInt(nClients);
+        HostedNetwork.setStatus(NetshWlan.val(net.get(5).toString()));
         // security
         data = NetshWlan.exec("show hostednetwork security");
         net.clear();
@@ -85,20 +83,19 @@ public final class HostedNetwork extends HostedNetworkAbstract {
         if (net.size() < 4) {
             return;
         }
-        this.setPassword(NetshWlan.val(net.get(3).toString()).trim());
+        HostedNetwork.setPassword(NetshWlan.val(net.get(3).toString()).trim());
         Client.loadClients();
     }
 
-    @Override
-    public void setStatus(String sta) {
+    public static void setStatus(String _status) {
         ArrayList<String> startedElements = new ArrayList<>();
         startedElements.add("Started");
         startedElements.add("Iniciado");
-        sta = HostedNetwork.camelCase(sta);
-        if (startedElements.indexOf(sta) != -1) {
-            this.status = "started";
+        _status = HostedNetwork.camelCase(_status);
+        if (startedElements.indexOf(_status) != -1) {
+            HostedNetwork.status = "started";
         } else {
-            this.status = "stopped";
+            HostedNetwork.status = "stopped";
         }
     }
 
@@ -117,7 +114,7 @@ public final class HostedNetwork extends HostedNetworkAbstract {
         return out;
     }
  
-    public boolean toggleRun(String _ssid, String _password, String maxClients) {
+    public static boolean toggleRun(String _ssid, String _password, String maxClients) {
         String cmd = "set hostednetwork mode=allow"
                     + " ssid=\""+_ssid+"\""
                     + " key=\""+_password+"\""
@@ -127,7 +124,7 @@ public final class HostedNetwork extends HostedNetworkAbstract {
             System.out.println("No se pudo cambiar los parametros de la red");
             return false;
         }
-        String action = this.getStatus().equals("started")? "stop": "start";
+        String action = HostedNetwork.getStatus().equals("started")? "stop": "start";
         System.out.println("Comando a ejecutar: " + action + " hostednetwork");
         return NetshWlan.simpleExec(action + " hostednetwork");
     }

@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Wifi-Manager"
-#define MyAppVersion "1.17.07.16"
+#define MyAppVersion "1.26.07.16"
 #define MyAppPublisher "Soluciones Integrales en Computación Aplicada"
 #define MyAppURL "http://www.mundosica.com/"
 #define MyAppExeName "wifi-manager.exe"

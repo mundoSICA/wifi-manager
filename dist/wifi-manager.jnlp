@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="wifi-manager.jnlp">
+  <information>
+    <title>wifi-manager</title>
+    <vendor>Inspiron I5558</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="wifi-manager.jar" size="50997" download="eager" />
+  </resources>
+  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="wifi-manager" >
+    <param name="requiredFXVersion" value="8.0+"/>
+  </applet-desc>
+  <jfx:javafx-desc  width="800" height="600" main-class="main.java.com.mundosica.wifi.manager.Dispatcher"  name="wifi-manager" />
+  <update check="always"/>
+</jnlp>

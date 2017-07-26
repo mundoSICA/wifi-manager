@@ -61,7 +61,6 @@ public class HotspotTabController implements Initializable {
     @FXML
     private Button btn_start_stop;
     private String currentStatus = "";
-    private HostedNetwork hotspot;
     //
     @FXML
     private TableView tableClients;
@@ -103,7 +102,7 @@ public class HotspotTabController implements Initializable {
      */
     @FXML
     public void toggleRun(ActionEvent event) {
-        hotspot.toggleRun(ssid.getText(), passwordValue(), num_max_clients.getText());
+        HostedNetwork.toggleRun(ssid.getText(), passwordValue(), num_max_clients.getText());
         this.refleshInterfaceData();
     }
 
@@ -117,12 +116,12 @@ public class HotspotTabController implements Initializable {
     }
 
     public void refleshInterfaceData() {
-        hotspot = new HostedNetwork();
-        this.ssid.setText(hotspot.getSsid());
-        this.num_max_clients.setText(hotspot.getNum_max_clients() + "");
-        this.currentStatus = hotspot.getStatus();
-        this.pass_hidden.setText(hotspot.getPassword());
-        this.pass_text.setText(hotspot.getPassword());
+        HostedNetwork.loadData();
+        this.ssid.setText(HostedNetwork.getSsid());
+        this.num_max_clients.setText(HostedNetwork.getNum_max_clients() + "");
+        this.currentStatus = HostedNetwork.getStatus();
+        this.pass_hidden.setText(HostedNetwork.getPassword());
+        this.pass_text.setText(HostedNetwork.getPassword());
         // reflesh btn_start_stop
         this.btn_start_stop.getStyleClass().remove("stopped");
         this.btn_start_stop.getStyleClass().remove("started");
