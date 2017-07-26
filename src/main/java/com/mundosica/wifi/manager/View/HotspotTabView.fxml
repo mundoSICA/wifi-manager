@@ -29,11 +29,11 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="284.0" prefWidth="898.0">
                <children>
                   <!--              Table Clients                  -->
-                  <TableView fx:id="TableClients" layoutX="108.0" layoutY="30.0" prefHeight="187.0" prefWidth="710.0">
+                  <TableView fx:id="tableClients" editable="true" layoutX="108.0" layoutY="30.0" prefHeight="187.0" prefWidth="710.0">
                     <columns>
-                      <TableColumn prefWidth="120.0" text="IP" />
-                      <TableColumn prefWidth="121.0" text="hostname" />
-                        <TableColumn prefWidth="160.0" text="Mac Address" />
+                        <TableColumn fx:id="columnMac" prefWidth="200.0" text="Mac Address" />
+                        <TableColumn fx:id="columnIP" prefWidth="180.0" text="IP" />
+                        <TableColumn fx:id="columnHostName" prefWidth="250.0" text="hostname" />
                     </columns>
                   </TableView>
                </children>

@@ -86,6 +86,9 @@ public final class HostedNetwork extends HostedNetworkAbstract {
             return;
         }
         this.setPassword(NetshWlan.val(net.get(3).toString()));
+        if (this.getStatus().equals("started")) {
+            Client.loadClients();
+        }
     }
 
     @Override

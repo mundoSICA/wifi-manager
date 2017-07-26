@@ -34,6 +34,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  * 
@@ -47,7 +49,9 @@ public class Client extends ClientAbstract {
         this.ip = _ip;
         try {
             InetAddress addr = InetAddress.getByName(this.ip);
-            this.hostName = addr.getHostName();
+            System.out.println("Hostname: " + addr.getHostName());
+            System.out.println("CanonicaHostname: " + addr.getCanonicalHostName());
+            this.setHostName(addr.getHostName());
         } catch (UnknownHostException ue) {}
         Client.LIST_CLIENTS.put(_mac, this);
         System.out.println(this);
@@ -87,11 +91,27 @@ public class Client extends ClientAbstract {
     public String toString() {
         return "client:" + this.mac + "\t" + this.ip + "\t" + this.hostName + "\n";
     }
+    public void setHostName(String _hostName) {
+        if (_hostName.length()>11) {
+            _hostName = _hostName.replaceAll("(.*)\\.mshome\\.net$", "$1");
+        }
+        this.hostName = _hostName;
+    }
 
     /**
      * @return the LIST_CLIENTS
      */
     public static Map<String, Client> getLIST_CLIENTS() {
         return LIST_CLIENTS;
+    }
+    public static ObservableList list() {
+        ObservableList<Client> listClients = FXCollections.observableArrayList();
+        LIST_CLIENTS.forEach((mac, client) -> {
+            System.out.println("list->   " + client);
+            if (listClients.add(client)) {
+                System.out.print("  Cliente agregado");
+            }
+        });
+        return listClients;
     }
 }

@@ -108,7 +108,7 @@ public class ProfileTabController implements Initializable {
         String search = buscarField.getText();
         this.tableProfiles.getItems().clear();
         profilesList.clear();
-        if (search!=null && search.length() >= 2) {
+        if (search != null && search.length() >= 2) {
             this.profilesList = Profile.search(search);;
         } else {
             profilesList.addAll(Profile.list());

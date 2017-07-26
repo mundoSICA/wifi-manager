@@ -34,4 +34,46 @@ public class ClientAbstract {
     protected String mac;
     protected String ip;
     protected String hostName = "";
+
+    /**
+     * @return the mac
+     */
+    public String getMac() {
+        return mac;
+    }
+
+    /**
+     * @param mac the mac to set
+     */
+    public void setMac(String mac) {
+        this.mac = mac;
+    }
+
+    /**
+     * @return the ip
+     */
+    public String getIp() {
+        return ip;
+    }
+
+    /**
+     * @param ip the ip to set
+     */
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    /**
+     * @return the hostName
+     */
+    public String getHostName() {
+        return hostName;
+    }
+
+    /**
+     * @param hostName the hostName to set
+     */
+    public void setHostName(String hostName) {
+        this.hostName = hostName;
+    }
 }

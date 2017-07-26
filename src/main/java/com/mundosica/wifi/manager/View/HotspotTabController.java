@@ -34,7 +34,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import main.java.com.mundosica.wifi.manager.Model.Client;
 import main.java.com.mundosica.wifi.manager.Model.HostedNetwork;
 import main.java.com.mundosica.wifi.manager.Model.NetshWlan;
 
@@ -57,6 +61,15 @@ public class HotspotTabController implements Initializable {
     private Button btn_start_stop;
     private String currentStatus = "";
     private HostedNetwork hotspot;
+    //
+    @FXML
+    private TableView tableClients;
+    @FXML
+    private TableColumn columnMac;
+    @FXML
+    private TableColumn columnIP;
+    @FXML
+    private TableColumn columnHostName;
     /**
      * Controls the visibility of the Password field
      * @param event
@@ -85,8 +98,9 @@ public class HotspotTabController implements Initializable {
      */
     @FXML
     public void toggleRun(ActionEvent event) {
-        this.updateStatus();
+        this.refleshInterfaceData();
     }
+
     /**
      *
      * @param event
@@ -96,7 +110,14 @@ public class HotspotTabController implements Initializable {
         NetshWlan.basicExec("control ncpa.cpl");
     }
 
-    public void updateStatus() {
+    public void refleshInterfaceData() {
+        hotspot = new HostedNetwork();
+        this.ssid.setText(hotspot.getSsid());
+        this.num_max_clients.setText(hotspot.getNum_max_clients() + "");
+        this.currentStatus = hotspot.getStatus();
+        this.pass_hidden.setText(hotspot.getPassword());
+        this.pass_text.setText(hotspot.getPassword());
+        // reflesh btn_start_stop
         this.btn_start_stop.getStyleClass().remove("stopped");
         this.btn_start_stop.getStyleClass().remove("started");
         if (currentStatus.equals("started")) {
@@ -105,19 +126,19 @@ public class HotspotTabController implements Initializable {
             this.btn_start_stop.setText("Iniciar");
         }
         this.btn_start_stop.getStyleClass().add(currentStatus);
+        // Load Clients
+        tableClients.getItems().clear();
+        tableClients.setItems(Client.list());
     }
- 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.togglevisiblePassword(null);
-        //Set values
-        hotspot = new HostedNetwork();
-        this.ssid.setText(hotspot.getSsid());
-        this.num_max_clients.setText(hotspot.getNum_max_clients() + "");
-        this.currentStatus = hotspot.getStatus();
-        this.updateStatus();
-        this.pass_hidden.setText(hotspot.getPassword());
-        this.pass_text.setText(hotspot.getPassword());
+        this.refleshInterfaceData();
+        // Table clients
+        columnMac.setCellValueFactory(new PropertyValueFactory<>("mac"));
+        columnIP.setCellValueFactory(new PropertyValueFactory<>("ip"));
+        columnHostName.setCellValueFactory(new PropertyValueFactory<>("hostName"));
     }
 
 }
