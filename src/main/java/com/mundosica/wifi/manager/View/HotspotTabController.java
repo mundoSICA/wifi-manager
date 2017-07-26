@@ -38,6 +38,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import main.java.com.mundosica.wifi.manager.Dispatcher;
 import main.java.com.mundosica.wifi.manager.Model.Client;
 import main.java.com.mundosica.wifi.manager.Model.HostedNetwork;
 import main.java.com.mundosica.wifi.manager.Model.NetshWlan;
@@ -102,6 +103,7 @@ public class HotspotTabController implements Initializable {
      */
     @FXML
     public void toggleRun(ActionEvent event) {
+        hotspot.toggleRun(ssid.getText(), passwordValue(), num_max_clients.getText());
         this.refleshInterfaceData();
     }
 
@@ -137,14 +139,16 @@ public class HotspotTabController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.togglevisiblePassword(null);
-        this.refleshInterfaceData();
+        Dispatcher.stage.setTitle("Hotspot");
         // Table clients
-        columnMac.setCellValueFactory(new PropertyValueFactory<>("num"));
+        columnNum.setCellValueFactory(new PropertyValueFactory<>("num"));
         columnMac.setCellValueFactory(new PropertyValueFactory<>("mac"));
         columnIP.setCellValueFactory(new PropertyValueFactory<>("ip"));
-        columnMac.setCellValueFactory(new PropertyValueFactory<>("ipType"));
+        columnIptype.setCellValueFactory(new PropertyValueFactory<>("ipType"));
         columnHostName.setCellValueFactory(new PropertyValueFactory<>("hostName"));
+        //
+        this.refleshInterfaceData();
+        this.togglevisiblePassword(null);
     }
 
 }

@@ -49,14 +49,12 @@ public class Client extends ClientAbstract {
         this.mac = _mac;
         this.ip = _ip;
         this.num = ++numClients;
+        this.ipType = _ipType;
         try {
             InetAddress addr = InetAddress.getByName(this.ip);
-            System.out.println("Hostname: " + addr.getHostName());
-            System.out.println("CanonicaHostname: " + addr.getCanonicalHostName());
             this.setHostName(addr.getHostName());
         } catch (UnknownHostException ue) {}
         Client.LIST_CLIENTS.put(_mac, this);
-        System.out.println(this);
     }
 
     /**
@@ -64,6 +62,8 @@ public class Client extends ClientAbstract {
      *      netsh interface ip delete arpcache
      */
     public static void loadClients() {
+        LIST_CLIENTS.clear();
+        numClients = 0;
         Pattern p = Pattern.compile("^\\s+([A-F0-9:]{17})\\s+.*$");
         Stream<String> info = NetshWlan.exec("show hostednetwork");
         ArrayList<String> macs = new ArrayList<>();
@@ -74,7 +74,7 @@ public class Client extends ClientAbstract {
             }
         });
         Map<String, String[]> macsIps = new HashMap();
-        Pattern patIPs = Pattern.compile("^\\s+([0-9.]{7,15})\\s+([-A-F0-9]{17})\\s+([^\\s]+)$");
+        Pattern patIPs = Pattern.compile("^\\s+([0-9.]{7,15})\\s+([-A-F0-9]{17})\\s+(.+)$");
         info = NetshWlan.basicExec("arp -a");
         info.forEach(line -> {
             Matcher m = patIPs.matcher(line.toUpperCase());
@@ -96,6 +96,11 @@ public class Client extends ClientAbstract {
     public String toString() {
         return num + " client: " + mac + "\t" + ip + "\t" + ipType + "\t" + hostName + "\n";
     }
+    /**
+     * set normalized hotsName
+     *
+     * @param _hostName
+     */
     public void setHostName(String _hostName) {
         if (_hostName.length()>11) {
             _hostName = _hostName.replaceAll("(.*)\\.mshome\\.net$", "$1");
@@ -112,9 +117,8 @@ public class Client extends ClientAbstract {
     public static ObservableList list() {
         ObservableList<Client> listClients = FXCollections.observableArrayList();
         LIST_CLIENTS.forEach((mac, client) -> {
-            System.out.println("list->   " + client);
             if (listClients.add(client)) {
-                System.out.print("  Cliente agregado");
+                System.out.print("Cliente agregado:" + client);
             }
         });
         return listClients;

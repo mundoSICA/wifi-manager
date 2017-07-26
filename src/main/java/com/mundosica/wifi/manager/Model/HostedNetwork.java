@@ -85,10 +85,8 @@ public final class HostedNetwork extends HostedNetworkAbstract {
         if (net.size() < 4) {
             return;
         }
-        this.setPassword(NetshWlan.val(net.get(3).toString()));
-        if (this.getStatus().equals("started")) {
-            Client.loadClients();
-        }
+        this.setPassword(NetshWlan.val(net.get(3).toString()).trim());
+        Client.loadClients();
     }
 
     @Override
@@ -119,7 +117,18 @@ public final class HostedNetwork extends HostedNetworkAbstract {
         return out;
     }
  
-    public static String toggleRun(String text, String passwordValue, String maxClients) {
-        return "started";
+    public boolean toggleRun(String _ssid, String _password, String maxClients) {
+        String cmd = "set hostednetwork mode=allow"
+                    + " ssid=\""+_ssid+"\""
+                    + " key=\""+_password+"\""
+                    + " keyUsage=persistent ";
+        System.out.println("Comando: netsh wlan "+cmd);
+        if (!NetshWlan.simpleExec(cmd)) {
+            System.out.println("No se pudo cambiar los parametros de la red");
+            return false;
+        }
+        String action = this.getStatus().equals("started")? "stop": "start";
+        System.out.println("Comando a ejecutar: " + action + " hostednetwork");
+        return NetshWlan.simpleExec(action + " hostednetwork");
     }
 }
