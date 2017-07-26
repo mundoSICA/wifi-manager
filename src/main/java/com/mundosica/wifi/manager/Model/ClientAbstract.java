@@ -31,9 +31,25 @@ package main.java.com.mundosica.wifi.manager.Model;
  * @author @Fitorec <chanerec at gmail.com>
  */
 public class ClientAbstract {
+    protected  Integer num;
     protected String mac;
     protected String ip;
+    protected String ipType;
     protected String hostName = "";
+
+    /**
+     * @return the num
+     */
+    public Integer getNum() {
+        return num;
+    }
+
+    /**
+     * @param num the num to set
+     */
+    public void setNum(Integer num) {
+        this.num = num;
+    }
 
     /**
      * @return the mac
@@ -61,6 +77,20 @@ public class ClientAbstract {
      */
     public void setIp(String ip) {
         this.ip = ip;
+    }
+
+    /**
+     * @return the ipType
+     */
+    public String getIpType() {
+        return ipType;
+    }
+
+    /**
+     * @param ipType the ipType to set
+     */
+    public void setIpType(String ipType) {
+        this.ipType = ipType;
     }
 
     /**

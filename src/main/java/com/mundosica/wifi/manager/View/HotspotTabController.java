@@ -65,9 +65,13 @@ public class HotspotTabController implements Initializable {
     @FXML
     private TableView tableClients;
     @FXML
+    private TableColumn columnNum;
+    @FXML
     private TableColumn columnMac;
     @FXML
     private TableColumn columnIP;
+    @FXML
+    private TableColumn columnIptype;
     @FXML
     private TableColumn columnHostName;
     /**
@@ -136,8 +140,10 @@ public class HotspotTabController implements Initializable {
         this.togglevisiblePassword(null);
         this.refleshInterfaceData();
         // Table clients
+        columnMac.setCellValueFactory(new PropertyValueFactory<>("num"));
         columnMac.setCellValueFactory(new PropertyValueFactory<>("mac"));
         columnIP.setCellValueFactory(new PropertyValueFactory<>("ip"));
+        columnMac.setCellValueFactory(new PropertyValueFactory<>("ipType"));
         columnHostName.setCellValueFactory(new PropertyValueFactory<>("hostName"));
     }
 

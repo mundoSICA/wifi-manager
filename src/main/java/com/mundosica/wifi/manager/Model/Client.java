@@ -43,10 +43,12 @@ import javafx.collections.ObservableList;
  */
 public class Client extends ClientAbstract {
     private static final Map<String, Client> LIST_CLIENTS = new HashMap();
+    private static int numClients = 0;
 
-    private Client(String _mac, String _ip) {
+    private Client(String _mac, String _ip, String _ipType) {
         this.mac = _mac;
         this.ip = _ip;
+        this.num = ++numClients;
         try {
             InetAddress addr = InetAddress.getByName(this.ip);
             System.out.println("Hostname: " + addr.getHostName());
@@ -71,25 +73,28 @@ public class Client extends ClientAbstract {
                 macs.add(m.group(1));
             }
         });
-        Map<String, String> macsIps = new HashMap();
-        Pattern patIPs = Pattern.compile("^\\s+([0-9.]{7,15})\\s+([-A-F0-9]{17}).*$");
+        Map<String, String[]> macsIps = new HashMap();
+        Pattern patIPs = Pattern.compile("^\\s+([0-9.]{7,15})\\s+([-A-F0-9]{17})\\s+([^\\s]+)$");
         info = NetshWlan.basicExec("arp -a");
         info.forEach(line -> {
             Matcher m = patIPs.matcher(line.toUpperCase());
             if (m.find()) {
-                macsIps.put(m.group(2).replaceAll("-", ":"), m.group(1));
+                String mac = m.group(2).replaceAll("-", ":");
+                String ipData[] = {m.group(1), m.group(3)};
+                macsIps.put(mac, ipData);
             }
         });
         macs.forEach(mac -> {
             if (macsIps.containsKey(mac)) {
-                new Client(mac, macsIps.get(mac));
+                String ipData[] = macsIps.get(mac);
+                new Client(mac, ipData[0], ipData[1]);
             }
         });
     }
 
     @Override
     public String toString() {
-        return "client:" + this.mac + "\t" + this.ip + "\t" + this.hostName + "\n";
+        return num + " client: " + mac + "\t" + ip + "\t" + ipType + "\t" + hostName + "\n";
     }
     public void setHostName(String _hostName) {
         if (_hostName.length()>11) {
