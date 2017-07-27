@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="500.0" maxWidth="900.0" minHeight="500.0" minWidth="900.0" prefHeight="500.0" prefWidth="900.0" styleClass="background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.com.mundosica.wifi.manager.View.ProfileTabController">
+<AnchorPane id="AnchorPane" maxHeight="550.0" maxWidth="950.0" minHeight="550.0" minWidth="950.0" prefHeight="550.0" prefWidth="950.0" styleClass="background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.com.mundosica.wifi.manager.View.ProfileTabController">
     <children>
       <TextField fx:id="buscarField" layoutX="30.0" layoutY="26.0" onKeyReleased="#buscar" prefHeight="31.0" prefWidth="295.0" promptText="Buscar" />
       <TableView fx:id="tableProfiles" editable="true" layoutX="30.0" layoutY="80.0" onKeyPressed="#tableOnKeyPressed" onMouseClicked="#tableOnMouseClicked" prefHeight="385.0" prefWidth="850.0" tableMenuButtonVisible="true">
@@ -23,8 +23,6 @@
         </columns>
       </TableView>
       <Button layoutX="700.0" layoutY="26.0" mnemonicParsing="true" onAction="#importar" prefHeight="31.0" prefWidth="127.0" text="_Importar" />
-      <Hyperlink id="mundosica" layoutX="749.0" layoutY="467.0" onAction="#getSICA" text="mundosica.com" />
-      <Text fx:id="powered" layoutX="674.0" layoutY="485.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Powered By" wrappingWidth="89.185546875" />
       <CheckBox fx:id="pass_visible" layoutX="362.0" layoutY="33.0" mnemonicParsing="false" onAction="#visiblePassword" text="Visible" />
     </children>
 </AnchorPane>

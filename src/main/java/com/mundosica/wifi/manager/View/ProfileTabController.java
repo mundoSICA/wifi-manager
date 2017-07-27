@@ -131,16 +131,6 @@ public class ProfileTabController implements Initializable {
      * @param ae
      */
     @FXML
-    public void getSICA(ActionEvent ae) {
-        System.out.println("Vamos a mundosica.com");
-        hostServices.showDocument("http://mundosica.com");
-    }
-
-    /**
-     *
-     * @param ae
-     */
-    @FXML
     public void importar(ActionEvent ae) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Importar Configuración");

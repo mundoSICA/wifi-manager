@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="MainView" maxHeight="600.0" maxWidth="950.0" minHeight="600.0" minWidth="950.0" prefHeight="600.0" prefWidth="950.0" styleClass="background" stylesheets="@style.css" xmlns:fx="http://javafx.com/fxml/1">
-    <TabPane >
-    <tabs>
-        <Tab text="Perfiles">
-            <content>
-                <fx:include fx:id="ProfileTab" source="ProfileTabView.fxml"/>
-            </content>
-        </Tab>
-        <Tab text="Hotspot">
-            <content>
-                <fx:include fx:id="HotspotTab" source="HotspotTabView.fxml"/>
-            </content>
-        </Tab>
-    </tabs>
-</TabPane>
+<AnchorPane id="MainView" maxHeight="600.0" maxWidth="950.0" minHeight="600.0" minWidth="950.0" prefHeight="600.0" prefWidth="950.0" styleClass="background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.com.mundosica.wifi.manager.View.MainViewController">
+   <children>
+       <TabPane tabClosingPolicy="UNAVAILABLE">
+       <tabs>
+           <Tab text="Perfiles">
+               <content>
+                   <fx:include fx:id="ProfileTab" source="ProfileTabView.fxml" />
+               </content>
+           </Tab>
+           <Tab text="Hotspot">
+               <content>
+                   <fx:include fx:id="HotspotTab" source="HotspotTabView.fxml" />
+               </content>
+           </Tab>
+       </tabs>
+   </TabPane>
+      <Text fx:id="powered" layoutX="730.0" layoutY="584.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Powered By" wrappingWidth="89.185546875" />
+      <Hyperlink id="mundosica" layoutX="800.0" layoutY="566.0" onAction="#getSICA" text="mundosica.com" />
+   </children>
 </AnchorPane>

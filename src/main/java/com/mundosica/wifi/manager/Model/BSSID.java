@@ -43,10 +43,10 @@ class BSSID {
     BSSID(List<String> dataBSSID) {
         this.mac = NetshWlan.val(dataBSSID.get(0));
         String sing = NetshWlan.val(dataBSSID.get(1));
-        this.signal = Integer.parseInt(sing.substring(0, sing.length()-1));
+        this.signal = Integer.parseInt(sing.substring(0, sing.length()-1).trim());
         this.type = NetshWlan.val(dataBSSID.get(2));
         if (dataBSSID.size()>3) {
-            this.chanel = Integer.parseInt(NetshWlan.val(dataBSSID.get(3)));
+            this.chanel = Integer.parseInt(NetshWlan.val(dataBSSID.get(3)).trim());
             this.vel_basic = NetshWlan.val(dataBSSID.get(4));
             this.vel_other = NetshWlan.val(dataBSSID.get(5));
         }

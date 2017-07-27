@@ -53,7 +53,7 @@ public class Dispatcher extends Application {
             Dispatcher.stage.close();
             return;
         }
-        Parent root = FXMLLoader.load(getClass().getResource("View/HotspotTabView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("View/MainView.fxml"));
         Scene scene = new Scene(root);
         Dispatcher.stage.setScene(scene);
         Dispatcher.stage.setTitle("Conexiones Inalambricas");

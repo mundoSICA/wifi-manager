@@ -28,7 +28,10 @@ package main.java.com.mundosica.wifi.manager.View;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import static main.java.com.mundosica.wifi.manager.View.ProfileTabController.hostServices;
 
 /**
  * 
@@ -37,10 +40,17 @@ import javafx.fxml.Initializable;
  * @URL: https://stackoverflow.com/questions/19889882/javafx-tabpane-one-controller-for-each-tab
  */
 public class MainViewController implements Initializable {
-
+    /**
+     *
+     * @param ae
+     */
+    @FXML
+    public void getSICA(ActionEvent ae) {
+        System.out.println("Vamos a mundosica.com");
+        hostServices.showDocument("http://mundosica.com");
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
