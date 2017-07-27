@@ -96,6 +96,7 @@ public class Client extends ClientAbstract {
     public String toString() {
         return num + " client: " + mac + "\t" + ip + "\t" + ipType + "\t" + hostName + "\n";
     }
+
     /**
      * set normalized hotsName
      *
@@ -106,6 +107,14 @@ public class Client extends ClientAbstract {
             _hostName = _hostName.replaceAll("(.*)\\.mshome\\.net$", "$1");
         }
         this.hostName = _hostName;
+    }
+
+    /**
+     * @param ipType the ipType to set
+     */
+    public void setIpType(String ipType) {
+        this.ipType = (ipType.indexOf("stat") == -1)?
+                "static" : "DHCP";
     }
 
     /**

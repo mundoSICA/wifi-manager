@@ -28,12 +28,14 @@ package main.java.com.mundosica.wifi.manager.View;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -47,7 +49,9 @@ import main.java.com.mundosica.wifi.manager.Model.NetshWlan;
  * 
  * @author @Fitorec <chanerec at gmail.com>
  */
-public class HotspotTabController implements Initializable {
+public class HotspotTabController implements Initializable, Runnable {
+    @FXML
+    private SplitPane mainContainer;
     @FXML
     private TextField ssid;
     @FXML
@@ -91,11 +95,11 @@ public class HotspotTabController implements Initializable {
         pass_text.setVisible(false);
     }
 
-
     private String passwordValue() {
         return pass_toggle.isSelected()?
            pass_text.getText(): pass_hidden.getText();
     }
+
     /**
      *
      * @param event
@@ -148,6 +152,25 @@ public class HotspotTabController implements Initializable {
         //
         this.refleshInterfaceData();
         this.togglevisiblePassword(null);
+        // update table
+        Thread thread = new Thread(this);
+        thread.start();
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Actualizando tabla");
+        try {
+            ObservableList list = Client.list();
+            tableClients.getItems().clear();
+            tableClients.setItems(list);
+            Thread.sleep(3000);
+        } catch (InterruptedException ie) {
+            System.out.println("Child thread interrupted! " + ie);
+        }
+        if (Dispatcher.stage.isShowing()) {
+            this.run();
+        }
     }
 
 }
