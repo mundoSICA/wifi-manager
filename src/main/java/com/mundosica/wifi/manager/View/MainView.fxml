@@ -11,12 +11,12 @@
    <children>
        <TabPane tabClosingPolicy="UNAVAILABLE">
        <tabs>
-           <Tab text="Perfiles">
+           <Tab text="Perfiles guardados">
                <content>
                    <fx:include fx:id="ProfileTab" source="ProfileTabView.fxml" />
                </content>
            </Tab>
-           <Tab text="Hotspot">
+           <Tab text="Compartir Internet (Hotspot)">
                <content>
                    <fx:include fx:id="HotspotTab" source="HotspotTabView.fxml" />
                </content>

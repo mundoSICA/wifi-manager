@@ -105,6 +105,7 @@
 }
 
 .button:focused, .button:hover {
+	-fx-cursor: hand;
     -fx-background-color:
         rgba(255, 255, 255, 0.08),
         rgba(0, 0, 0, 0.8),
@@ -163,41 +164,40 @@
  *  Tabs
  */
 .tab-pane .tab-header-area .tab-header-background {
-    -fx-opacity: 0;
-}
-
-.tab-pane {
-    -fx-tab-min-width:90px;
+    -fx-opacity: 0.5;
+    -fx-background-color: #000000;
 }
 
 .tab {
     -fx-background-insets: 0 1 0 1,0,0;
 }
 .tab-pane .tab {
-    -fx-background-color: #e6e6e6;
-}
-
-.tab-pane .tab:selected {
-    -fx-background-color: #3c3c3c;
+    -fx-background-color: #4D4D4D;
 }
 
 .tab .tab-label { 
     -fx-alignment: CENTER;
-    -fx-text-fill: #828282;
+    -fx-text-fill: #00d0ff;
     -fx-font-size: 12px;
     -fx-font-weight: bold;
 }
 
+.tab-pane .tab:hover {
+	-fx-cursor: hand;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #00d0ff;
+}
+
 .tab:selected .tab-label { 
     -fx-alignment: CENTER;
-    -fx-text-fill: #96b946;
+    -fx-text-fill: #000000;
+    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.9) , 5,0,2,2 );
 }
+
 /* Split Panel - (Hotspot)
  */
-
-.split-pane:horizontal > .split-pane-divider {
-   -fx-background-color: transparent;
-}
 .split-pane:vertical > .split-pane-divider {
    -fx-background-color: rgba(0,0,0,0.5);
 }
