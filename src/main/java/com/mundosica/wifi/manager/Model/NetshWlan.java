@@ -120,14 +120,6 @@ public class NetshWlan {
     }
 
     /**
-     * networks
-     * @return El resultado del scaneo.
-     */
-    protected static Stream<String> networks() {
-        String cmd = "show network mode=bssid";
-        return NetshWlan.exec(cmd);
-    }
-    /**
      * 
      * @param line
      * @return 
@@ -140,6 +132,23 @@ public class NetshWlan {
         if (index<1 || index+2 > line.length()) {
             return "";
         }
-        return line.substring(index+1);
+        return line.substring(index+1).trim();
+    }
+
+    /**
+     * Regresa el valor de un elemento en modo número entero.
+     *
+     * @param line
+     * @return El valor númerico en line
+     */
+    public static Integer intVal(String line) {
+        if (line == null || line.length()<2) {
+            return 0;
+        }
+        line = NetshWlan.val(line).replaceAll("[^0-9]", "");
+        try {
+            return Integer.parseInt(line);
+        } catch(Exception e) {}
+        return 0;
     }
 }

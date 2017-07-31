@@ -58,7 +58,8 @@ public class Dispatcher extends Application {
         Dispatcher.stage.setScene(scene);
         Dispatcher.stage.setTitle("Conexiones Inalambricas");
         Dispatcher.stage.getIcons().add(new Image("file:icon.png"));
-        //WifiManager.stage.initStyle(StageStyle.UNDECORATED);
+        // Dispatcher.stage.initStyle(StageStyle.UNDECORATED);
+        // Dispatcher.stage.initStyle(StageStyle.UTILITY);
         ProfileTabController.hostServices = getHostServices();
         Dispatcher.stage.show();
     }

@@ -65,11 +65,10 @@ public final class HostedNetwork extends HostedNetworkAbstract {
         if (net.size() < 6) {
             return;
         }
-        HostedNetwork.ssid = NetshWlan.val(net.get(1).toString()).trim();
+        HostedNetwork.ssid = NetshWlan.val((String) net.get(1)).trim();
         HostedNetwork.ssid = HostedNetwork.ssid.replaceAll("\"", "");
-        String nClients = NetshWlan.val(net.get(2).toString()).trim();
-        HostedNetwork.num_max_clients = Integer.parseInt(nClients);
-        HostedNetwork.setStatus(NetshWlan.val(net.get(5).toString()));
+        HostedNetwork.num_max_clients = NetshWlan.intVal((String) net.get(2));
+        HostedNetwork.setStatus(NetshWlan.val((String) net.get(5)));
         // security
         data = NetshWlan.exec("show hostednetwork security");
         net.clear();
@@ -83,15 +82,21 @@ public final class HostedNetwork extends HostedNetworkAbstract {
         if (net.size() < 4) {
             return;
         }
-        HostedNetwork.setPassword(NetshWlan.val(net.get(3).toString()).trim());
+        HostedNetwork.setPassword(NetshWlan.val((String)net.get(3)).trim());
         Client.loadClients();
     }
 
+    /**
+     * Cambia el valor de status, normalizando el valor a solo
+     * started o stopped
+     *
+     * @param _status el valor del estado.
+     */
     public static void setStatus(String _status) {
         ArrayList<String> startedElements = new ArrayList<>();
-        startedElements.add("Started");
-        startedElements.add("Iniciado");
-        _status = HostedNetwork.camelCase(_status);
+        startedElements.add("started");
+        startedElements.add("iniciado");
+        _status = _status.toLowerCase();
         if (startedElements.indexOf(_status) != -1) {
             HostedNetwork.status = "started";
         } else {

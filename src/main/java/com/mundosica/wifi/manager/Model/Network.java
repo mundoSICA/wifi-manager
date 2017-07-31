@@ -38,10 +38,12 @@ public class Network extends NetworkAbstract{
     public static List<Network> nets = new ArrayList<>();
 
     public static int indexOf(String name) {
+        System.out.println("Buscando la red [" + name + "]");
         for (int i=0; i < Network.nets.size(); i++) {
            if (Network.nets.get(i).name.equals(name)) {
                return i;
            }
+           System.out.println("\t\t[" + Network.nets.get(i).name+"]");
        }
         return -1;
     }
@@ -124,11 +126,11 @@ public class Network extends NetworkAbstract{
     }
 
     /**
-     * Se encarga de cargar las redes existentes
+     * Se encarga de cargar los datos de las redes scanneadas
      *
      */
     protected static void update() {
-        Object[] lines = NetshWlan.networks().toArray();
+        Object[] lines = NetshWlan.exec("show network mode=bssid").toArray();
         List<String> dataNet = new ArrayList<>();
         Network.nets.clear();
         for (int i=3; i<lines.length; i++) {
