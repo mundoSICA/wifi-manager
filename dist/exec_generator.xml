@@ -24,11 +24,11 @@
     <runtimeBits>64/32</runtimeBits>
   </jre>
   <versionInfo>
-    <fileVersion>1.26.07.16</fileVersion>
+    <fileVersion>1.17.8.10</fileVersion>
     <txtFileVersion>Beta</txtFileVersion>
     <fileDescription>Wifi Manager</fileDescription>
     <copyright>MIT LICENSE</copyright>
-    <productVersion>1.26.07.16</productVersion>
+    <productVersion>1.17.8.10</productVersion>
     <txtProductVersion>Beta</txtProductVersion>
     <productName>Wifi Maganer</productName>
     <companyName>mundosica.com</companyName>

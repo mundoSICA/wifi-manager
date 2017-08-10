@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Wifi-Manager"
-#define MyAppVersion "1.26.07.16"
+#define MyAppVersion "1.17.8.10"
 #define MyAppPublisher "Soluciones Integrales en Computación Aplicada"
 #define MyAppURL "http://www.mundosica.com/"
 #define MyAppExeName "wifi-manager.exe"
@@ -19,7 +19,7 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={pf}\{#MyAppName}
+DefaultDirName={pf}\mundosica.com\{#MyAppName}
 DisableProgramGroupPage=yes
 LicenseFile=..\LICENSE
 OutputDir=.
@@ -38,6 +38,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 [Files]
 Source: "wifi-manager.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "../icon.png"; DestDir: "{app}"; Flags: ignoreversion
+Source: "../img/*"; DestDir: "{app}/img"; Flags: ignoreversion recursesubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Dirs]
