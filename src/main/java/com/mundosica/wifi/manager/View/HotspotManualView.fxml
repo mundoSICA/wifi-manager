@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="606.0" maxWidth="500.0" minHeight="600.0" minWidth="472.0" prefHeight="606.0" prefWidth="472.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.com.mundosica.wifi.manager.View.HotspotManualController">
+    <stylesheets>
+        <URL value="@HotspotManual.css" />
+    </stylesheets>
+   <children>
+      <Button fx:id="next" layoutX="442.0" layoutY="140.0" onAction="#onNext" prefHeight="223.0" prefWidth="25.0" text="&gt;" />
+      <Button fx:id="prev" layoutX="2.0" layoutY="140.0" onAction="#onPrev" prefHeight="223.0" prefWidth="25.0" text="&lt;" />
+      <ImageView fx:id="mainImg" fitHeight="475.0" fitWidth="377.0" layoutX="41.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../../img/step_4.png" />
+         </image></ImageView>
+      <!-- Foot and steps -->
+      <Text fx:id="foot" fill="#fcfcfc" layoutX="15.0" layoutY="518.0" strokeType="OUTSIDE" strokeWidth="0.0" text="En la pestaña de uso compartido comparte la conexión a Internet a la conexión creada por el hotspot" wrappingWidth="444.0" />
+      <ImageView fx:id="stepsImg" fitHeight="34.0" fitWidth="300.0" layoutX="70.0" layoutY="561.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../../img/step_0_foot.png" />
+         </image></ImageView>
+   </children>
+</AnchorPane>

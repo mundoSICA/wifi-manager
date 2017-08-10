@@ -65,7 +65,7 @@ public final class HostedNetwork extends HostedNetworkAbstract {
         if (net.size() < 6) {
             return;
         }
-        HostedNetwork.ssid = NetshWlan.val((String) net.get(1)).trim();
+        HostedNetwork.ssid = NetshWlan.val((String) net.get(1));
         HostedNetwork.ssid = HostedNetwork.ssid.replaceAll("\"", "");
         HostedNetwork.num_max_clients = NetshWlan.intVal((String) net.get(2));
         HostedNetwork.setStatus(NetshWlan.val((String) net.get(5)));

@@ -28,6 +28,8 @@ package main.java.com.mundosica.wifi.manager.View;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,11 +37,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import main.java.com.mundosica.wifi.manager.Dispatcher;
 import main.java.com.mundosica.wifi.manager.Model.Client;
 import main.java.com.mundosica.wifi.manager.Model.HostedNetwork;
@@ -50,8 +52,6 @@ import main.java.com.mundosica.wifi.manager.Model.NetshWlan;
  * @author @Fitorec <chanerec at gmail.com>
  */
 public class HotspotTabController implements Initializable, Runnable {
-    @FXML
-    private SplitPane mainContainer;
     @FXML
     private TextField ssid;
     @FXML
@@ -82,6 +82,7 @@ public class HotspotTabController implements Initializable, Runnable {
      * Controls the visibility of the Password field
      * @param event
      */
+    
     @FXML
     public void togglevisiblePassword(ActionEvent event) {
         if (pass_toggle.isSelected()) {
@@ -119,6 +120,15 @@ public class HotspotTabController implements Initializable, Runnable {
         NetshWlan.basicExec("control ncpa.cpl");
     }
 
+    /**
+     *
+     * @param event
+     */
+    @FXML
+    public void viewHotspotManual(ActionEvent event) {
+        Dispatcher.openNewWindow("HotspotManualView.fxml");
+    }
+
     public void refleshInterfaceData() {
         HostedNetwork.loadData();
         this.ssid.setText(HostedNetwork.getSsid());
@@ -129,17 +139,27 @@ public class HotspotTabController implements Initializable, Runnable {
         // reflesh btn_start_stop
         this.btn_start_stop.getStyleClass().remove("stopped");
         this.btn_start_stop.getStyleClass().remove("started");
-        if (currentStatus.equals("started")) {
-            this.btn_start_stop.setText("Detener");
-        } else {
-            this.btn_start_stop.setText("Iniciar");
-        }
+        this.btnStarStopMouseExited(null);
         this.btn_start_stop.getStyleClass().add(currentStatus);
         // Load Clients
         tableClients.getItems().clear();
         tableClients.setItems(Client.list());
     }
 
+    public void btnStarStopMouseEntered(MouseEvent me) {
+        if (currentStatus.equals("started")) {
+            this.btn_start_stop.setText("Detener");
+        } else {
+            this.btn_start_stop.setText("Inicializar");
+        }
+    }
+    public void btnStarStopMouseExited(MouseEvent me) {
+        if (currentStatus.equals("started")) {
+            this.btn_start_stop.setText("Inicializado");
+        } else {
+            this.btn_start_stop.setText("Detenido");
+        }
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Dispatcher.stage.setTitle("Hotspot");
@@ -152,6 +172,15 @@ public class HotspotTabController implements Initializable, Runnable {
         //
         this.refleshInterfaceData();
         this.togglevisiblePassword(null);
+        //
+        num_max_clients.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    num_max_clients.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
         // update table
         Thread thread = new Thread(this);
         thread.start();

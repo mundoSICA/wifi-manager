@@ -1,0 +1,22 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+AnchorPane {
+    -fx-background-image: url("CoarseGrid.png");
+    -fx-background-repeat: repeat;
+    -fx-background-color:
+        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+        linear-gradient(#20262b, #191d22),
+        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+}
+#foot {
+    -fx-text-alignment: center;
+    -fx-fill: #FFEEFF;
+    -fx-font-size: 18px;
+}
+#main_img, ImageView, image {
+    -fx-padding: 10;
+    -fx-background-color: #ccccff;
+    -fx-background-radius: 5;
+}

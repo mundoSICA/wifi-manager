@@ -38,12 +38,10 @@ public class Network extends NetworkAbstract{
     public static List<Network> nets = new ArrayList<>();
 
     public static int indexOf(String name) {
-        System.out.println("Buscando la red [" + name + "]");
         for (int i=0; i < Network.nets.size(); i++) {
            if (Network.nets.get(i).name.equals(name)) {
                return i;
            }
-           System.out.println("\t\t[" + Network.nets.get(i).name+"]");
        }
         return -1;
     }

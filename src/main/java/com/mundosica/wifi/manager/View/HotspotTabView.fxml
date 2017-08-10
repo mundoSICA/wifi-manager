@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<SplitPane fx:id="mainContainer" dividerPositions="0.5" layoutX="4.0" layoutY="4.0" maxHeight="550.0" maxWidth="950.0" minHeight="550.0" minWidth="950.0" prefHeight="550.0" prefWidth="950.0" orientation="VERTICAL" styleClass="background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.com.mundosica.wifi.manager.View.HotspotTabController">
+<SplitPane fx:id="mainContainer" dividerPositions="0.5" layoutX="4.0" layoutY="4.0" maxHeight="550.0" maxWidth="950.0" minHeight="550.0" minWidth="950.0" orientation="VERTICAL" prefHeight="550.0" prefWidth="950.0" styleClass="background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.com.mundosica.wifi.manager.View.HotspotTabController">
     <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="210.0" prefWidth="898.0">
                <children>
@@ -20,12 +20,12 @@
                   <PasswordField fx:id="pass_hidden" layoutX="67.0" layoutY="115.0" promptText="password" />
                   <CheckBox fx:id="pass_toggle" layoutX="299.0" layoutY="122.0" mnemonicParsing="false" onAction="#togglevisiblePassword" text="Visible" textFill="WHITE" />
                   <!-- Start/Stop -->
-                  <Button fx:id="btn_start_stop" layoutX="64.0" layoutY="181.0" mnemonicParsing="false" onAction="#toggleRun" prefHeight="40.0" prefWidth="233.0" text="Iniciar" />
+                  <Button fx:id="btn_start_stop" layoutX="64.0" layoutY="181.0" mnemonicParsing="false" onAction="#toggleRun" onMouseEntered="#btnStarStopMouseEntered" onMouseExited="#btnStarStopMouseExited" prefHeight="40.0" prefWidth="233.0" text="Iniciar" />
                   <!-- Numero maximo de clients -->
                   <TextField fx:id="num_max_clients" layoutX="316.0" layoutY="58.0" prefHeight="31.0" prefWidth="106.0" />
                   <Text fill="WHITE" layoutX="316.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Núm. máx de clientes" />
                   <!-- Conexiones de red -->
-                  <Button layoutX="693.0" layoutY="90.0" mnemonicParsing="false" onAction="#openSystemConnections" text="Ver Manual" />
+                  <Button layoutX="693.0" layoutY="90.0" mnemonicParsing="false" onAction="#viewHotspotManual" text="Ver Manual" />
                   <!-- Conexiones de red -->
                   <Button layoutX="693.0" layoutY="159.0" mnemonicParsing="false" onAction="#openSystemConnections" text="Ver connexiones" />
                </children>
