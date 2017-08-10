@@ -25,6 +25,8 @@
  */
 package main.java.com.mundosica.wifi.manager;
 
+import java.io.IOException;
+import java.net.URL;
 import main.java.com.mundosica.wifi.manager.View.ProfileTabController;
 import java.util.prefs.Preferences;
 import javafx.application.Application;
@@ -53,13 +55,19 @@ public class Dispatcher extends Application {
             Dispatcher.stage.close();
             return;
         }
+        if (!isValidWindowsVersion()) {
+            Alert alert = new Alert(AlertType.ERROR, "El host virtual esta disponible para windows 7 o superior");
+            alert.showAndWait();
+            Dispatcher.stage.close();
+            return;
+        }
         Parent root = FXMLLoader.load(getClass().getResource("View/MainView.fxml"));
         Scene scene = new Scene(root);
         Dispatcher.stage.setScene(scene);
         Dispatcher.stage.setTitle("Conexiones Inalambricas");
         Dispatcher.stage.getIcons().add(new Image("file:icon.png"));
-        // Dispatcher.stage.initStyle(StageStyle.UNDECORATED);
-        // Dispatcher.stage.initStyle(StageStyle.UTILITY);
+        //Dispatcher.stage.initStyle(StageStyle.UNDECORATED);
+        //Dispatcher.stage.initStyle(StageStyle.UTILITY);
         ProfileTabController.hostServices = getHostServices();
         Dispatcher.stage.show();
     }
@@ -78,6 +86,33 @@ public class Dispatcher extends Application {
         } catch(Exception e) {
             return false;
         }
+    }
+
+    /**
+     * Validate the windows version:
+     * https://stackoverflow.com/questions/6109679/how-to-check-windows-edition-in-java/45622250#45622250
+     * https://docs.oracle.com/javase/tutorial/essential/environment/sysprop.html
+     *
+     * Windows versions: https://en.wikipedia.org/wiki/List_of_Microsoft_Windows_versions#Client_versions
+     *
+     * @return true if is valid windows.
+     */
+    public static boolean isValidWindowsVersion() {
+        String version[] = System.getProperty("os.version").trim().split("\\.");
+        int verNum = Integer.parseInt(version[0]) * 10;
+        verNum += Integer.parseInt(version[1]);
+        return verNum>60; //Windows 7 is 61
+    }
+
+    public static void openNewWindow(String fileNameFXML) {
+        try {
+            URL file = Dispatcher.class.getResource("View/" + fileNameFXML);
+            Parent root = FXMLLoader.load(file);
+            Stage _stage = new Stage();
+            Scene scene = new Scene(root);
+            _stage.setScene(scene);
+            _stage.show();
+        } catch(IOException e) {}
     }
 
     /**
